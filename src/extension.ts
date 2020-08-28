@@ -1,16 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import {DEFAULT_COMMANDS, PLUGIN_NAME, ERRORS} from './consts';
+import {IItem, ICommand} from './types';
 
 const {exec} = require('child_process');
-const pluginName = 'favoritesPanel';
-
-interface IItem {
-    collapsibleState: number;
-    label: string;
-    version: string;
-    command?: any;
-    iconPath: any;
-}
 
 // Tree View
 export class FavoritesPanelProvider implements vscode.TreeDataProvider<IItem> {
@@ -46,11 +39,11 @@ export class FavoritesPanelProvider implements vscode.TreeDataProvider<IItem> {
 function getCommand(command: string) {
     switch (command) {
         case 'openFile':
-            return `${pluginName}.openFile`;
+            return `${PLUGIN_NAME}.openFile`;
         case 'run':
-            return `${pluginName}.run`;
+            return `${PLUGIN_NAME}.run`;
         case 'openUrl':
-            return `${pluginName}.openUrl`;
+            return `${PLUGIN_NAME}.openUrl`;
         default:
             return null;
     }
@@ -81,9 +74,10 @@ function getIcon(command: string) {
 
 // Получение данных из файла конфигурации
 function getData() {
-    const configuration = vscode.workspace.getConfiguration(pluginName);
-    const commandsFromConf: any = configuration.get('commands') || [];
-    return commandsFromConf.map((item: any) => {
+    const configuration = vscode.workspace.getConfiguration(PLUGIN_NAME);
+    const commandsFromConf: ICommand[] = configuration.get('commands') || [];
+    const commands = commandsFromConf.length ? commandsFromConf : DEFAULT_COMMANDS;
+    return commands.map((item: any) => {
         return {
             label: item.label,
             description: item.description,
@@ -105,16 +99,19 @@ function runProgram(program: string) {
 }
 
 // Открытие файла
-function openFile(file: string) {
-    const filePath: string = vscode.workspace.rootPath || '';
-    if (!filePath) {
-        vscode.window.showErrorMessage('Не найден каталог проекта!');
-        return;
-    }
-    const document = `${filePath}\\${file}`;
-    vscode.workspace.openTextDocument(document).then((doc) => {
-        vscode.window.showTextDocument(doc);
-    });
+function openFile(args: any) {
+    const projectPath: string = vscode.workspace.rootPath || '';
+    const filePath = args[1] === 'external' ? '' : projectPath;
+    const document = `${filePath}\\${args[0]}`;
+
+    vscode.workspace.openTextDocument(document).then(
+        (doc) => {
+            vscode.window.showTextDocument(doc);
+        },
+        () => {
+            vscode.window.showErrorMessage(`${ERRORS.FILE_NOT_FOUND}: ${document}`);
+        }
+    );
 }
 
 // Открытие URL
@@ -130,16 +127,16 @@ function openUrl(args: any) {
 export function activate(context: vscode.ExtensionContext) {
     const favoritesPanelProvider = new FavoritesPanelProvider(getData());
     vscode.window.registerTreeDataProvider('favoritesPanel', favoritesPanelProvider);
-    vscode.commands.registerCommand(`${pluginName}.refreshPanel`, () => favoritesPanelProvider.refresh());
+    vscode.commands.registerCommand(`${PLUGIN_NAME}.refreshPanel`, () => favoritesPanelProvider.refresh());
 
     context.subscriptions.push(
-        vscode.commands.registerCommand(`${pluginName}.openFile`, (args) => {
-            openFile(args[0]);
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.openFile`, (args) => {
+            openFile(args);
         }),
-        vscode.commands.registerCommand(`${pluginName}.run`, (args) => {
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.run`, (args) => {
             runProgram(args[0]);
         }),
-        vscode.commands.registerCommand(`${pluginName}.openUrl`, (args) => {
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.openUrl`, (args) => {
             openUrl(args);
         })
     );

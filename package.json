@@ -2,7 +2,7 @@
 	"name": "favorites-panel",
 	"displayName": "Favorites panel",
 	"description": "Favorites panel extension for VSCODE",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"publisher": "sabitovvt",
 	"engines": {
 		"vscode": "^1.48.0"
