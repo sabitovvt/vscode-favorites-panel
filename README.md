@@ -1,18 +1,22 @@
 # Favorites Panel
 
 Adds a panel for accessing frequently used files, Internet addresses, programs, commands.
+![Favorites Panel](preview/screenshot_0.png)
 
 ## Features
 
 - Quick access to your favorite files
 - Quick access to favorite URLs
 - Fast launch of applications
+- Quick access to your favorite files
+- Quick access to favorite commandss
 
 
 ## Extension Settings
 
 The extension requires initial configuration.
-Edit the settings file VSCODE. 
+Edit the settings file VSCODE.
+If extension settings are not specified, demo settings will be used.
 
 ### Opening file
 
@@ -40,8 +44,45 @@ Settings for opening file in project
       "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"]
     }
 ```
+### Run program
 
-#### Settings for example:
+Settings for run program
+
+```json
+    {
+      "label": "Chrome",
+      "description": "Run Chrome",
+      "command": "run",
+      "arguments": ["start chrome"]
+    }
+```
+### Open URL
+
+Settings for open URL
+
+```json
+    {
+      "label": "github.com",
+      "description": "",
+      "command": "openUrl",
+      "arguments": ["https://github.com"]
+    }
+```
+### Run Command
+
+Settings for running arbitrary commands
+
+```json
+    {
+        "label": "Zoom In",
+        "description": "",
+        "command": "runCommand",
+        "arguments": ["editor.action.fontZoomIn"],
+    }
+```
+### Settings for example:
+
+Copy this snippet of settings into settings.json file (VS Code settings file) to see the extension in action.
 
 ```json
   "favoritesPanel.commands": [
@@ -69,6 +110,18 @@ Settings for opening file in project
       "command": "openUrl",
       "arguments": ["https://github.com"]
     },
+    {
+        "label": "Zoom In",
+        "description": "",
+        "command": "runCommand",
+        "arguments": ["editor.action.fontZoomIn"],
+    },
+    {
+        "label": "Zoom Out",
+        "description": "",
+        "command": "runCommand",
+        "arguments": ["editor.action.fontZoomOut"],
+    },
   ]
 ```
 
@@ -76,12 +129,8 @@ Settings for opening file in project
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+## 0.3.0
 
-### 0.2.0
-
-- Added the ability to open files outside the project (added the "external" argument to the "openFile" command).
-
-### 0.1.0
-
-Initial release
+- Change the icon of the extension in marketplace.
+- Change the icon of the extension on the panel.
+- Added the ability to run arbitrary VS Code commands or extensions

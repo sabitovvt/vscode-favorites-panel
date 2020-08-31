@@ -25,6 +25,18 @@ export const DEFAULT_COMMANDS = [
         command: 'openUrl',
         arguments: ['https://github.com'],
     },
+    {
+        label: 'Zoom In',
+        description: '',
+        command: 'runCommand',
+        arguments: ['editor.action.fontZoomIn'],
+    },
+    {
+        label: 'Zoom Out',
+        description: '',
+        command: 'runCommand',
+        arguments: ['editor.action.fontZoomOut'],
+    },
 ];
 
 export const ERRORS = {

@@ -44,6 +44,8 @@ function getCommand(command: string) {
             return `${PLUGIN_NAME}.run`;
         case 'openUrl':
             return `${PLUGIN_NAME}.openUrl`;
+        case 'runCommand':
+            return `${PLUGIN_NAME}.runCommand`;
         default:
             return null;
     }
@@ -63,6 +65,11 @@ function getIcon(command: string) {
                 dark: path.join(__filename, '..', '..', 'resources', 'dark', 'link.svg'),
             };
         case 'run':
+            return {
+                light: path.join(__filename, '..', '..', 'resources', 'light', 'run.svg'),
+                dark: path.join(__filename, '..', '..', 'resources', 'dark', 'run.svg'),
+            };
+        case 'runCommand':
             return {
                 light: path.join(__filename, '..', '..', 'resources', 'light', 'run.svg'),
                 dark: path.join(__filename, '..', '..', 'resources', 'dark', 'run.svg'),
@@ -123,6 +130,11 @@ function openUrl(args: any) {
     vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(args[0]));
 }
 
+// Запуск произвольной команды
+function runCommand(args: any) {
+    vscode.commands.executeCommand(args[0]);
+}
+
 // Активация команд
 export function activate(context: vscode.ExtensionContext) {
     const favoritesPanelProvider = new FavoritesPanelProvider(getData());
@@ -138,6 +150,9 @@ export function activate(context: vscode.ExtensionContext) {
         }),
         vscode.commands.registerCommand(`${PLUGIN_NAME}.openUrl`, (args) => {
             openUrl(args);
+        }),
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.runCommand`, (args) => {
+            runCommand(args);
         })
     );
 }
