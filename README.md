@@ -1,6 +1,7 @@
 # Favorites Panel
 
 Adds a panel for accessing frequently used files, Internet addresses, programs, commands.
+
 ![Favorites Panel](preview/screenshot_0.png)
 
 ## Features
@@ -9,7 +10,7 @@ Adds a panel for accessing frequently used files, Internet addresses, programs, 
 - Quick access to favorite URLs
 - Fast launch of applications
 - Quick access to your favorite files
-- Quick access to favorite commandss
+- Quick access to favorite commands
 
 
 ## Extension Settings
@@ -48,6 +49,8 @@ Settings for opening file in project
 
 Settings for run program
 
+#### Run Chrome in OS Windows
+
 ```json
     {
       "label": "Chrome",
@@ -56,6 +59,17 @@ Settings for run program
       "arguments": ["start chrome"]
     }
 ```
+#### Open folder in OS Windows
+
+```json
+    {
+      "label": "Windows",
+      "description": "",
+      "command": "run",
+      "arguments": ["start explorer /n, C:\\Windows"]
+    }
+```
+
 ### Open URL
 
 Settings for open URL
@@ -64,8 +78,8 @@ Settings for open URL
     {
       "label": "github.com",
       "description": "",
-      "command": "openUrl",
-      "arguments": ["https://github.com"]
+      "command": "runCommand",
+      "arguments": ["vscode.open", "https://github.com"],
     }
 ```
 ### Run Command
@@ -74,12 +88,32 @@ Settings for running arbitrary commands
 
 ```json
     {
-        "label": "Zoom In",
-        "description": "",
-        "command": "runCommand",
-        "arguments": ["editor.action.fontZoomIn"],
+      "label": "Zoom In",
+      "description": "",
+      "command": "runCommand",
+      "arguments": ["editor.action.fontZoomIn"],
     }
 ```
+#### Open Search panel
+command: workbench.action.findInFiles
+arguments:
+- query?: string;
+-	isRegex?: boolean;
+-	triggerSearch?: boolean;
+-	filesToInclude?: string;
+-	filesToExclude?: string;
+-	isCaseSensitive?: boolean;
+
+```json
+    {
+      "label": "Find in files",
+      "description": "",
+      "command": "runCommand",
+      "arguments": ["workbench.action.findInFiles", {"query": "SearchPannern", "triggerSearch": true}],
+    },
+```
+
+
 ### Settings for example:
 
 Copy this snippet of settings into settings.json file (VS Code settings file) to see the extension in action.
@@ -107,8 +141,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
     {
       "label": "github.com",
       "description": "",
-      "command": "openUrl",
-      "arguments": ["https://github.com"]
+      "command": "runCommand",
+      "arguments": ["vscode.open", "https://github.com"],
     },
     {
         "label": "Zoom In",
@@ -129,8 +163,7 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 0.3.0
+## 0.4.0
 
-- Change the icon of the extension in marketplace.
-- Change the icon of the extension on the panel.
-- Added the ability to run arbitrary VS Code commands or extensions
+- Improved support for vscode commands.
+- Command "openUrl" is deprecated.

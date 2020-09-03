@@ -10,5 +10,5 @@ export interface ICommand {
     label: string;
     description?: string;
     command: string;
-    arguments?: Array<string>;
+    arguments?: Array<any>;
 }

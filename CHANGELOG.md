@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.4.0 | 2020/08/03
+
+- Improved support for vscode commands.
+- Command "openUrl" is deprecated.
+
 ## 0.3.0 | 2020/08/31
 
 - Change the icon of the extension in marketplace.

@@ -1,9 +1,11 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import {DEFAULT_COMMANDS, PLUGIN_NAME, ERRORS} from './consts';
+import {PLUGIN_NAME, ERRORS, INFORMATION} from './consts';
 import {IItem, ICommand} from './types';
+import demoSettings from './demosettings';
 
 const {exec} = require('child_process');
+const errors: string[] = [];
 
 // Tree View
 export class FavoritesPanelProvider implements vscode.TreeDataProvider<IItem> {
@@ -83,7 +85,7 @@ function getIcon(command: string) {
 function getData() {
     const configuration = vscode.workspace.getConfiguration(PLUGIN_NAME);
     const commandsFromConf: ICommand[] = configuration.get('commands') || [];
-    const commands = commandsFromConf.length ? commandsFromConf : DEFAULT_COMMANDS;
+    const commands = commandsFromConf.length ? commandsFromConf : demoSettings['favoritesPanel.commands'];
     return commands.map((item: any) => {
         return {
             label: item.label,
@@ -122,17 +124,35 @@ function openFile(args: any) {
 }
 
 // Открытие URL
+// DEPRECATED
 function openUrl(args: any) {
     if (!args[0]) {
         vscode.window.showErrorMessage('Не найден url!');
         return;
     }
+    vscode.window.showInformationMessage(`${INFORMATION.DEPRECATED} \n use the "vscode.open" command`);
     vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(args[0]));
 }
 
-// Запуск произвольной команды
+// Запуск произвольной команды VS Code
 function runCommand(args: any) {
-    vscode.commands.executeCommand(args[0]);
+    const [command, ...rest] = args;
+    switch (command) {
+        case '':
+            errors.push(ERRORS.COMMAND_NOT_FOUND);
+            break;
+        case 'vscode.open':
+            if (!rest[0]) {
+                errors.push(ERRORS.COMMAND_NOT_FOUND);
+            }
+            vscode.commands.executeCommand(command, vscode.Uri.parse(rest[0]));
+            break;
+        default:
+            vscode.commands.executeCommand(command, ...rest);
+    }
+    if (errors.length > 0) {
+        errors.forEach((error) => vscode.window.showErrorMessage(error));
+    }
 }
 
 // Активация команд
@@ -148,6 +168,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(`${PLUGIN_NAME}.run`, (args) => {
             runProgram(args[0]);
         }),
+        // DEPRECATED
         vscode.commands.registerCommand(`${PLUGIN_NAME}.openUrl`, (args) => {
             openUrl(args);
         }),
