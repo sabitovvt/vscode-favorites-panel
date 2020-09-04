@@ -11,6 +11,7 @@ Adds a panel for accessing frequently used files, Internet addresses, programs, 
 - Fast launch of applications
 - Quick access to your favorite files
 - Quick access to favorite commands
+- Setting icons for commands
 
 
 ## Extension Settings
@@ -19,6 +20,20 @@ The extension requires initial configuration.
 Edit the settings file VSCODE.
 If extension settings are not specified, demo settings will be used.
 
+The extension settings are in section **"favoritesPanel.commands": []** in the settings.json
+```json
+"favoritesPanel.commands": [
+    {
+        "label": "README",
+        "description": "- read me",
+        "icon": "zap",
+        "command": "openFile",
+        "arguments": ["README.MD"]
+    }
+]
+```
+List of available [icons](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons")
+
 ### Opening file
 
 #### File in project
@@ -26,12 +41,12 @@ If extension settings are not specified, demo settings will be used.
 Settings for opening file in project
 
 ```json
-    {
-      "label": "README",
-      "description": "- read me",
-      "command": "openFile",
-      "arguments": ["README.MD"]
-    }
+{
+    "label": "README",
+    "description": "- read me",
+    "command": "openFile",
+    "arguments": ["README.MD"]
+}
 ```
 #### File is out project 
 
@@ -163,7 +178,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 0.4.0
+## 0.5.0
 
-- Improved support for vscode commands.
-- Command "openUrl" is deprecated.
+- Added the ability to change icons for commands.
+
+More information in the [changelog](CHANGELOG.md "Changelog")

@@ -1,6 +1,10 @@
 # Change Log
 
-## 0.4.0 | 2020/08/03
+## 0.5.0 | 2020/09/04
+
+- Added the ability to change icons for commands.
+
+## 0.4.0 | 2020/09/03
 
 - Improved support for vscode commands.
 - Command "openUrl" is deprecated.

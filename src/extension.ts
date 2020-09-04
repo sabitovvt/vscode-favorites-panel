@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import {PLUGIN_NAME, ERRORS, INFORMATION} from './consts';
 import {IItem, ICommand} from './types';
 import demoSettings from './demosettings';
@@ -53,29 +52,17 @@ function getCommand(command: string) {
     }
 }
 
-// Получение иконки
-function getIcon(command: string) {
-    switch (command) {
+// get Icon
+function getIcon(item: any) {
+    switch (item.command) {
         case 'openFile':
-            return {
-                light: path.join(__filename, '..', '..', 'resources', 'light', 'document.svg'),
-                dark: path.join(__filename, '..', '..', 'resources', 'dark', 'document.svg'),
-            };
-        case 'openUrl':
-            return {
-                light: path.join(__filename, '..', '..', 'resources', 'light', 'link.svg'),
-                dark: path.join(__filename, '..', '..', 'resources', 'dark', 'link.svg'),
-            };
+            return new vscode.ThemeIcon('symbol-file');
+        case 'openUrl': // DEPRECATED
+            return new vscode.ThemeIcon('link-external');
         case 'run':
-            return {
-                light: path.join(__filename, '..', '..', 'resources', 'light', 'run.svg'),
-                dark: path.join(__filename, '..', '..', 'resources', 'dark', 'run.svg'),
-            };
+            return new vscode.ThemeIcon('console');
         case 'runCommand':
-            return {
-                light: path.join(__filename, '..', '..', 'resources', 'light', 'run.svg'),
-                dark: path.join(__filename, '..', '..', 'resources', 'dark', 'run.svg'),
-            };
+            return new vscode.ThemeIcon('run');
         default:
             return vscode.ThemeIcon.File;
     }
@@ -94,7 +81,7 @@ function getData() {
                 command: getCommand(item.command),
                 arguments: [item.arguments],
             },
-            iconPath: getIcon(item.command),
+            iconPath: (item.icon && new vscode.ThemeIcon(item.icon)) || getIcon(item),
         };
     });
 }
