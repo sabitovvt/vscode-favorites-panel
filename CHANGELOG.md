@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.1| 2020/09/07
+
+- Bug fix with refresh panel.
+
 ## 0.5.0 | 2020/09/04
 
 - Added the ability to change icons for commands.

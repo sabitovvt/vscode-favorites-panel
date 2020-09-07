@@ -124,7 +124,7 @@ arguments:
       "label": "Find in files",
       "description": "",
       "command": "runCommand",
-      "arguments": ["workbench.action.findInFiles", {"query": "SearchPannern", "triggerSearch": true}],
+      "arguments": ["workbench.action.findInFiles", {"query": "SearchPattern", "triggerSearch": true}],
     },
 ```
 
@@ -178,8 +178,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 0.5.0
+## 0.5.1
 
-- Added the ability to change icons for commands.
+- Bug fix with refresh panel/
 
 More information in the [changelog](CHANGELOG.md "Changelog")
