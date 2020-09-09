@@ -128,6 +128,17 @@ arguments:
     },
 ```
 
+#### Insert or replace text
+
+```json
+{
+  "label": "Replace",
+  "description": "",
+  "icon": "find-replace",
+  "command": "insertNewCode",
+  "arguments": ["ui/components/tableItem.ts", "<td className=\"col-date-time\">", "<div className=\"new\">NewText</div>", "before"],
+},
+```
 
 ### Settings for example:
 
@@ -178,8 +189,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 0.5.1
+## 0.6
 
-- Bug fix with refresh panel/
+- Added favoritesPanel.insertNewCode command.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

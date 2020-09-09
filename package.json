@@ -2,7 +2,7 @@
 	"name": "favorites-panel",
 	"displayName": "Favorites panel",
 	"description": "Favorites panel extension for VSCODE",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"publisher": "sabitovvt",
 	"engines": {
 		"vscode": "^1.48.0"
@@ -67,6 +67,10 @@
 			{
 				"command": "favoritesPanel.runCommand",
 				"title": "Run Command"
+			},
+			{
+				"command": "favoritesPanel.insertNewCode",
+				"title": "Insert or replace text"
 			}
 		],
 		"viewsContainers": {

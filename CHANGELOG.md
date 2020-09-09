@@ -1,6 +1,11 @@
 # Change Log
 
-## 0.5.1| 2020/09/07
+## 0.6.0 | 2020/09/09
+
+- Added favoritesPanel.insertNewCode command.
+
+
+## 0.5.1 | 2020/09/07
 
 - Bug fix with refresh panel.
 

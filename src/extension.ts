@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {PLUGIN_NAME, ERRORS, INFORMATION} from './consts';
 import {IItem, ICommand} from './types';
-import demoSettings from './demosettings';
+import * as demoSettings from '../resources/demosettings.json';
 
 const {exec} = require('child_process');
 const errors: string[] = [];
@@ -36,22 +36,6 @@ export class FavoritesPanelProvider implements vscode.TreeDataProvider<IItem> {
     }
 }
 
-// Получение команды
-function getCommand(command: string) {
-    switch (command) {
-        case 'openFile':
-            return `${PLUGIN_NAME}.openFile`;
-        case 'run':
-            return `${PLUGIN_NAME}.run`;
-        case 'openUrl':
-            return `${PLUGIN_NAME}.openUrl`;
-        case 'runCommand':
-            return `${PLUGIN_NAME}.runCommand`;
-        default:
-            return null;
-    }
-}
-
 // get Icon
 function getIcon(item: any) {
     switch (item.command) {
@@ -63,22 +47,24 @@ function getIcon(item: any) {
             return new vscode.ThemeIcon('console');
         case 'runCommand':
             return new vscode.ThemeIcon('run');
+        case 'insertNewCode':
+            return new vscode.ThemeIcon('find-replace');
         default:
             return vscode.ThemeIcon.File;
     }
 }
 
-// Получение данных из файла конфигурации
+// Get settings from configuration file.
 function getData() {
-    const configuration = vscode.workspace.getConfiguration(PLUGIN_NAME);
-    const commandsFromConf: ICommand[] = configuration.get('commands') || [];
-    const commands = commandsFromConf.length ? commandsFromConf : demoSettings['favoritesPanel.commands'];
+    const commandsFromConf: ICommand[] = getPluginConf();
+    const commands = commandsFromConf.length ? commandsFromConf : (<any>demoSettings)['favoritesPanel.commands'];
+
     return commands.map((item: any) => {
         return {
             label: item.label,
             description: item.description,
             command: {
-                command: getCommand(item.command),
+                command: `${PLUGIN_NAME}.${item.command}`,
                 arguments: [item.arguments],
             },
             iconPath: (item.icon && new vscode.ThemeIcon(item.icon)) || getIcon(item),
@@ -137,9 +123,58 @@ function runCommand(args: any) {
         default:
             vscode.commands.executeCommand(command, ...rest);
     }
+
+    displayErrors();
+}
+
+// Добавление кода в выбранный файл
+function insertNewCode(args: any) {
+    const [file, searchPattern, newCode, action = 'before'] = args;
+    const projectPath: string = vscode.workspace.rootPath || '';
+    const document: string = `${projectPath}\\${file}`;
+    vscode.workspace.openTextDocument(document).then(
+        (doc) => {
+            vscode.window.showTextDocument(doc).then(() => {
+                const editor = vscode.window.activeTextEditor;
+                if (editor) {
+                    const fullText = editor.document.getText();
+                    const regexp = new RegExp(searchPattern);
+                    const index = fullText.search(regexp);
+                    switch (action) {
+                        case 'replace':
+                        case 'after':
+                            errors.push(ERRORS.COMMAND_NOT_SUPPORTED_YET);
+                            break;
+                        case 'before':
+                        default:
+                            const position = editor.document.positionAt(index);
+                            editor.edit((editBuilder) => {
+                                editBuilder.insert(position, newCode);
+                            });
+                    }
+                }
+            });
+        },
+        () => {
+            errors.push(`${ERRORS.FILE_NOT_FOUND}: ${document}`);
+        }
+    );
+
+    displayErrors();
+}
+
+// Отображаем ошибки.
+function displayErrors(): void {
     if (errors.length > 0) {
         errors.forEach((error) => vscode.window.showErrorMessage(error));
+        errors.length = 0;
     }
+}
+
+// Получение настроек плагина
+function getPluginConf(): ICommand[] {
+    const configuration = vscode.workspace.getConfiguration(PLUGIN_NAME);
+    return configuration.get('commands') || [];
 }
 
 // Активация команд
@@ -161,8 +196,16 @@ export function activate(context: vscode.ExtensionContext) {
         }),
         vscode.commands.registerCommand(`${PLUGIN_NAME}.runCommand`, (args) => {
             runCommand(args);
+        }),
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.insertNewCode`, (args) => {
+            insertNewCode(args);
         })
     );
+
+    // Открываем демонстрационный файл настроек
+    if (!getPluginConf().length) {
+        openFile([`${context.extensionPath}\\resources\\demosettings.json`, 'external']);
+    }
 }
 
 export function deactivate() {}
