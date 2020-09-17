@@ -21,6 +21,7 @@ Edit the settings file VSCODE.
 If extension settings are not specified, demo settings will be used.
 
 The extension settings are in section **"favoritesPanel.commands": []** in the settings.json
+
 ```json
 "favoritesPanel.commands": [
     {
@@ -102,12 +103,12 @@ Settings for open URL
 Settings for running arbitrary commands
 
 ```json
-    {
-      "label": "Zoom In",
-      "description": "",
-      "command": "runCommand",
-      "arguments": ["editor.action.fontZoomIn"],
-    }
+{
+  "label": "Zoom In",
+  "description": "",
+  "command": "runCommand",
+  "arguments": ["editor.action.fontZoomIn"],
+}
 ```
 #### Open Search panel
 command: workbench.action.findInFiles
@@ -120,15 +121,16 @@ arguments:
 -	isCaseSensitive?: boolean;
 
 ```json
-    {
-      "label": "Find in files",
-      "description": "",
-      "command": "runCommand",
-      "arguments": ["workbench.action.findInFiles", {"query": "SearchPattern", "triggerSearch": true}],
-    },
+{
+  "label": "Find in files",
+  "description": "",
+  "command": "runCommand",
+  "arguments": ["workbench.action.findInFiles", {"query": "SearchPattern", "triggerSearch": true}],
+},
 ```
 
-#### Insert or replace text
+#### Insert text
+Search and insert text by regexp pattern. Searches until the first match.
 
 ```json
 {
@@ -137,7 +139,20 @@ arguments:
   "icon": "find-replace",
   "command": "insertNewCode",
   "arguments": ["ui/components/tableItem.ts", "<td className=\"col-date-time\">", "<div className=\"new\">NewText</div>", "before"],
-},
+}
+```
+
+#### Replace text
+Search and replace text by regexp pattern. Searches until the first match.
+
+```json
+{
+  "label": "Replace",
+  "description": "",
+  "icon": "find-replace",
+  "command": "insertNewCode",
+  "arguments": ["ui/components/tableItem.ts", "<td className=\"col-date-time\">", "<div className=\"WOW\"></div>", "replace"]
+}
 ```
 
 ### Settings for example:
@@ -189,8 +204,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 0.6
+### 0.7.0
 
-- Added favoritesPanel.insertNewCode command.
+- Added the _replace_ parameter of the __favoritesPanel.insertNewCode__ command.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

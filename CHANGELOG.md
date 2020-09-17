@@ -1,8 +1,12 @@
 # Change Log
 
+## 0.7.0 | 2020/09/17
+
+- Added the _replace_ parameter of the __favoritesPanel.insertNewCode__ command.
+
 ## 0.6.0 | 2020/09/09
 
-- Added favoritesPanel.insertNewCode command.
+- Added __favoritesPanel.insertNewCode__ command.
 
 
 ## 0.5.1 | 2020/09/07

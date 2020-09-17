@@ -137,19 +137,26 @@ function insertNewCode(args: any) {
             vscode.window.showTextDocument(doc).then(() => {
                 const editor = vscode.window.activeTextEditor;
                 if (editor) {
-                    const fullText = editor.document.getText();
                     const regexp = new RegExp(searchPattern);
+                    const fullText = editor.document.getText();
                     const index = fullText.search(regexp);
+                    const searchedText = (fullText.match(regexp) || [])[0];
+                    const positionStart = editor.document.positionAt(index);
+                    const positionEnd = editor.document.positionAt(index + searchedText?.length);
                     switch (action) {
                         case 'replace':
+                            const range = new vscode.Range(positionStart, positionEnd);
+                            editor.edit((editBuilder) => {
+                                editBuilder.replace(range, newCode);
+                            });
+                            break;
                         case 'after':
                             errors.push(ERRORS.COMMAND_NOT_SUPPORTED_YET);
                             break;
                         case 'before':
                         default:
-                            const position = editor.document.positionAt(index);
                             editor.edit((editBuilder) => {
-                                editBuilder.insert(position, newCode);
+                                editBuilder.insert(positionStart, newCode);
                             });
                     }
                 }
