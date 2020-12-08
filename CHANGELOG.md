@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.8.0 | 2020/12/08
+- Improvements TreeView
+
 ## 0.7.0 | 2020/09/17
 
 - Added the _replace_ parameter of the __favoritesPanel.insertNewCode__ command.

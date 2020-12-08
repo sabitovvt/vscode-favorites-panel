@@ -1,4 +1,6 @@
-export interface IItem {
+import * as vscode from 'vscode';
+
+export interface IItem extends vscode.TreeItem {
     collapsibleState: number;
     label: string;
     version: string;

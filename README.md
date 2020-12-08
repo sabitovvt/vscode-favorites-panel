@@ -1,6 +1,6 @@
 # Favorites Panel
 
-Adds a panel for accessing frequently used files, Internet addresses, programs, commands.
+Adds a panel for accessing frequently used files, Internet addresses, programs, commands, snippets.
 
 ![Favorites Panel](preview/screenshot_0.png)
 
@@ -34,6 +34,23 @@ The extension settings are in section **"favoritesPanel.commands": []** in the s
 ]
 ```
 List of available [icons](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons")
+
+## Examples of using the plugin
+
+### Editing code
+```json
+{
+    "label": "lowercase ➜ UPPER CASE",
+    "description": "",
+    "icon": "debug-step-out",
+    "command": "runCommand",
+    "arguments": [
+        "editor.action.transformToUppercase"
+    ]
+}
+```
+![Favorites Panel](preview/lowercase_to_uppercase.gif)
+
 
 ### Opening file
 
@@ -160,52 +177,136 @@ Search and replace text by regexp pattern. Searches until the first match.
 Copy this snippet of settings into settings.json file (VS Code settings file) to see the extension in action.
 
 ```json
-  "favoritesPanel.commands": [
-    {
-      "label": "README",
-      "description": "- read me",
-      "command": "openFile",
-      "arguments": ["README.MD"]
-    },
-    {
-      "label": "Hosts",
-      "description": "",
-      "command": "openFile",
-      "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"]
-    },
-    {
-      "label": "Chrome",
-      "description": "Run Chrome",
-      "command": "run",
-      "arguments": ["start chrome"]
-    },
-    {
-      "label": "github.com",
-      "description": "",
-      "command": "runCommand",
-      "arguments": ["vscode.open", "https://github.com"],
-    },
-    {
-        "label": "Zoom In",
-        "description": "",
-        "command": "runCommand",
-        "arguments": ["editor.action.fontZoomIn"],
-    },
-    {
-        "label": "Zoom Out",
-        "description": "",
-        "command": "runCommand",
-        "arguments": ["editor.action.fontZoomOut"],
-    },
-  ]
+    "favoritesPanel.commands": [
+        {
+            "label": "README",
+            "description": " - Important!",
+            "command": "openFile",
+            "arguments": ["README.MD"]
+        },
+        {
+            "label": "Hosts",
+            "description": "Windows hosts file",
+            "command": "openFile",
+            "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"]
+        },
+        {
+            "label": "EDIT",
+            "commands": [
+                {
+                    "label": "lowercase ➜ UPPER CASE",
+                    "description": "",
+                    "icon": "debug-step-out",
+                    "command": "runCommand",
+                    "arguments": [
+                        "editor.action.transformToUppercase"
+                    ]
+                },
+                {
+                    "label": "UPPER CASE ➜ lowercase",
+                    "description": "",
+                    "icon": "debug-step-into",
+                    "command": "runCommand",
+                    "arguments": [
+                        "editor.action.transformToLowercase"
+                    ]
+                },
+                {
+                    "label": "var ➜ prop={prop}",
+                    "description": "",
+                    "icon": "symbol-namespace",
+                    "command": "runCommand",
+                    "arguments": [
+                        "editor.action.insertSnippet",
+                        {
+                            "snippet": "$TM_SELECTED_TEXT={$TM_SELECTED_TEXT}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Chrome",
+            "description": "Run Chrome",
+            "icon": "browser",
+            "command": "run",
+            "arguments": ["start chrome"]
+        },
+        {
+            "label": "github.com",
+            "description": "",
+            "icon": "link-external",
+            "command": "runCommand",
+            "arguments": ["vscode.open", "https://github.com"]
+        },
+        {
+            "label": "Windows folder",
+            "description": "Open Windows folder",
+            "icon": "symbol-folder",
+            "command": "run",
+            "arguments": ["start explorer /n, C:\\Windows"]
+        },
+        {
+            "label": "Find in files",
+            "description": "",
+            "icon": "search",
+            "command": "runCommand",
+            "arguments": ["workbench.action.findInFiles", {"query": "SearchPannern", "triggerSearch": true}]
+        },
+        {
+            "label": "ZOOM",
+            "commands": [
+                {
+                    "label": "Zoom In",
+                    "description": "",
+                    "icon": "zoom-in",
+                    "command": "runCommand",
+                    "arguments": ["editor.action.fontZoomIn"]
+                },
+                {
+                    "label": "Zoom Out",
+                    "description": "",
+                    "icon": "zoom-out",
+                    "command": "runCommand",
+                    "arguments": ["editor.action.fontZoomOut"]
+                }
+            ]
+        },
+        {
+            "label": "Insert",
+            "description": "",
+            "icon": "find-replace",
+            "command": "insertNewCode",
+            "arguments": ["ui/components/tableItem.ts", "<td className=\"col-date-time\">", "<div className=\"WOW\"></div>", "before"]
+        },
+        {
+            "label": "Replace",
+            "description": "",
+            "icon": "find-replace",
+            "command": "insertNewCode",
+            "arguments": ["package.json", "\"webpack\": \"node --max-old-space-size=4096", "\"webpack\": \"node --max-old-space-size=8192", "replace"]
+        },
+        {
+            "label": "Snippet ➜ console.log(*!!!* ➜)",
+            "description": "",
+            "icon": "code",
+            "command": "runCommand",
+            "arguments": [
+                "editor.action.insertSnippet",
+                {
+                    "snippet": "console.log('***** !!! ***** ${1| ,this.props,this.state,props|} ----->', $1);"
+                }
+            ]
+        }
+    ]
 ```
 
 
 
 ## Release Notes
 
-### 0.7.0
+### 0.8.0
 
-- Added the _replace_ parameter of the __favoritesPanel.insertNewCode__ command.
+- Improvements TreeView
 
 More information in the [changelog](CHANGELOG.md "Changelog")

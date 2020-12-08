@@ -1,43 +1,16 @@
 import * as vscode from 'vscode';
-import {PLUGIN_NAME, ERRORS, INFORMATION} from './consts';
-import {IItem, ICommand} from './types';
+import {PLUGIN_NAME} from './consts';
+import {ICommand} from './types';
 import * as demoSettings from '../resources/demosettings.json';
+import {FavoritesPanelProvider} from './FavoritesPanelProvider';
+import {TreeItem} from './TreeItem';
+import {insertNewCode, openFile, openUrl, runCommand, runProgram} from './commands';
+import {Errors} from './Errors';
 
-const {exec} = require('child_process');
-const errors: string[] = [];
-
-// Tree View
-export class FavoritesPanelProvider implements vscode.TreeDataProvider<IItem> {
-    private _onDidChangeTreeData: vscode.EventEmitter<IItem | undefined | void> = new vscode.EventEmitter<IItem | undefined | void>();
-    readonly onDidChangeTreeData: vscode.Event<IItem | undefined | void> = this._onDidChangeTreeData.event;
-    constructor(private commands: any) {}
-
-    refresh(): void {
-        this.commands = getData();
-        this._onDidChangeTreeData.fire();
-    }
-
-    getTreeItem(element: IItem): vscode.TreeItem {
-        return element;
-    }
-
-    getChildren(element?: IItem): Thenable<IItem[]> {
-        if (!this.commands) {
-            vscode.window.showInformationMessage('Ассистент не знает чем вам помочь.');
-            return Promise.resolve([]);
-        }
-
-        if (element) {
-            vscode.window.showInformationMessage('Элемент не может быть обработан');
-            return Promise.resolve([]);
-        } else {
-            return Promise.resolve(this.commands);
-        }
-    }
-}
+export const errors = new Errors();
 
 // get Icon
-function getIcon(item: any) {
+const getIcon = (item: any) => {
     switch (item.command) {
         case 'openFile':
             return new vscode.ThemeIcon('symbol-file');
@@ -52,141 +25,45 @@ function getIcon(item: any) {
         default:
             return vscode.ThemeIcon.File;
     }
-}
+};
 
-// Get settings from configuration file.
-function getData() {
-    const commandsFromConf: ICommand[] = getPluginConf();
-    const commands = commandsFromConf.length ? commandsFromConf : (<any>demoSettings)['favoritesPanel.commands'];
-
-    return commands.map((item: any) => {
-        return {
-            label: item.label,
-            description: item.description,
-            command: {
-                command: `${PLUGIN_NAME}.${item.command}`,
-                arguments: [item.arguments],
-            },
-            iconPath: (item.icon && new vscode.ThemeIcon(item.icon)) || getIcon(item),
-        };
-    });
-}
-
-// Запуск внешней программы
-function runProgram(program: string) {
-    exec(program, {shell: true, encoding: 'utf8'}, function (err: any, data: any) {
-        console.log(err);
-        console.log(data.toString());
-    });
-}
-
-// Открытие файла
-function openFile(args: any) {
-    const projectPath: string = vscode.workspace.rootPath || '';
-    const filePath = args[1] === 'external' ? '' : projectPath;
-    const document = `${filePath}\\${args[0]}`;
-
-    vscode.workspace.openTextDocument(document).then(
-        (doc) => {
-            vscode.window.showTextDocument(doc);
+// Get command from item of settings
+const getCommand = (item: any) => {
+    return {
+        label: item.label,
+        description: item.description,
+        command: {
+            command: `${PLUGIN_NAME}.${item.command}`,
+            arguments: [item.arguments],
         },
-        () => {
-            vscode.window.showErrorMessage(`${ERRORS.FILE_NOT_FOUND}: ${document}`);
+        iconPath: (item.icon && new vscode.ThemeIcon(item.icon)) || getIcon(item),
+    };
+};
+
+// Get Commands from configuration.
+const getCommandsFromConf = (): ICommand[] => vscode.workspace.getConfiguration(PLUGIN_NAME).get('commands') || [];
+
+// Prepare commands for tree view.
+export const getCommandsForTree = () => {
+    const commandsFromConf: ICommand[] = getCommandsFromConf();
+    const commandsForTree = commandsFromConf.length ? commandsFromConf : (<any>demoSettings)[`${PLUGIN_NAME}.commands`];
+    return commandsForTree.map((item: any) => {
+        if (item.commands) {
+            return new TreeItem(
+                item.label,
+                item.commands.map((item: any) => {
+                    return getCommand(item);
+                })
+            );
+        } else {
+            return getCommand(item);
         }
-    );
-}
+    });
+};
 
-// Открытие URL
-// DEPRECATED
-function openUrl(args: any) {
-    if (!args[0]) {
-        vscode.window.showErrorMessage('Не найден url!');
-        return;
-    }
-    vscode.window.showInformationMessage(`${INFORMATION.DEPRECATED} \n use the "vscode.open" command`);
-    vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(args[0]));
-}
-
-// Запуск произвольной команды VS Code
-function runCommand(args: any) {
-    const [command, ...rest] = args;
-    switch (command) {
-        case '':
-            errors.push(ERRORS.COMMAND_NOT_FOUND);
-            break;
-        case 'vscode.open':
-            if (!rest[0]) {
-                errors.push(ERRORS.COMMAND_NOT_FOUND);
-            }
-            vscode.commands.executeCommand(command, vscode.Uri.parse(rest[0]));
-            break;
-        default:
-            vscode.commands.executeCommand(command, ...rest);
-    }
-
-    displayErrors();
-}
-
-// Добавление кода в выбранный файл
-function insertNewCode(args: any) {
-    const [file, searchPattern, newCode, action = 'before'] = args;
-    const projectPath: string = vscode.workspace.rootPath || '';
-    const document: string = `${projectPath}\\${file}`;
-    vscode.workspace.openTextDocument(document).then(
-        (doc) => {
-            vscode.window.showTextDocument(doc).then(() => {
-                const editor = vscode.window.activeTextEditor;
-                if (editor) {
-                    const regexp = new RegExp(searchPattern);
-                    const fullText = editor.document.getText();
-                    const index = fullText.search(regexp);
-                    const searchedText = (fullText.match(regexp) || [])[0];
-                    const positionStart = editor.document.positionAt(index);
-                    const positionEnd = editor.document.positionAt(index + searchedText?.length);
-                    switch (action) {
-                        case 'replace':
-                            const range = new vscode.Range(positionStart, positionEnd);
-                            editor.edit((editBuilder) => {
-                                editBuilder.replace(range, newCode);
-                            });
-                            break;
-                        case 'after':
-                            errors.push(ERRORS.COMMAND_NOT_SUPPORTED_YET);
-                            break;
-                        case 'before':
-                        default:
-                            editor.edit((editBuilder) => {
-                                editBuilder.insert(positionStart, newCode);
-                            });
-                    }
-                }
-            });
-        },
-        () => {
-            errors.push(`${ERRORS.FILE_NOT_FOUND}: ${document}`);
-        }
-    );
-
-    displayErrors();
-}
-
-// Отображаем ошибки.
-function displayErrors(): void {
-    if (errors.length > 0) {
-        errors.forEach((error) => vscode.window.showErrorMessage(error));
-        errors.length = 0;
-    }
-}
-
-// Получение настроек плагина
-function getPluginConf(): ICommand[] {
-    const configuration = vscode.workspace.getConfiguration(PLUGIN_NAME);
-    return configuration.get('commands') || [];
-}
-
-// Активация команд
+// Commands activations/
 export function activate(context: vscode.ExtensionContext) {
-    const favoritesPanelProvider = new FavoritesPanelProvider(getData());
+    const favoritesPanelProvider = new FavoritesPanelProvider(getCommandsForTree());
     vscode.window.registerTreeDataProvider('favoritesPanel', favoritesPanelProvider);
     vscode.commands.registerCommand(`${PLUGIN_NAME}.refreshPanel`, () => favoritesPanelProvider.refresh());
 
@@ -209,8 +86,8 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 
-    // Открываем демонстрационный файл настроек
-    if (!getPluginConf().length) {
+    // Open demo file of settings
+    if (!getCommandsFromConf().length) {
         openFile([`${context.extensionPath}\\resources\\demosettings.json`, 'external']);
     }
 }

@@ -13,6 +13,41 @@
             "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"]
         },
         {
+            "label": "EDIT",
+            "commands": [
+                {
+                    "label": "lowercase ➜ UPPER CASE",
+                    "description": "",
+                    "icon": "debug-step-out",
+                    "command": "runCommand",
+                    "arguments": [
+                        "editor.action.transformToUppercase"
+                    ]
+                },
+                {
+                    "label": "UPPER CASE ➜ lowercase",
+                    "description": "",
+                    "icon": "debug-step-into",
+                    "command": "runCommand",
+                    "arguments": [
+                        "editor.action.transformToLowercase"
+                    ]
+                },
+                {
+                    "label": "var ➜ prop={prop}",
+                    "description": "",
+                    "icon": "symbol-namespace",
+                    "command": "runCommand",
+                    "arguments": [
+                        "editor.action.insertSnippet",
+                        {
+                            "snippet": "$TM_SELECTED_TEXT={$TM_SELECTED_TEXT}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "label": "Chrome",
             "description": "Run Chrome",
             "icon": "browser",
@@ -41,18 +76,23 @@
             "arguments": ["workbench.action.findInFiles", {"query": "SearchPannern", "triggerSearch": true}]
         },
         {
-            "label": "Zoom In",
-            "description": "",
-            "icon": "zoom-in",
-            "command": "runCommand",
-            "arguments": ["editor.action.fontZoomIn"]
-        },
-        {
-            "label": "Zoom Out",
-            "description": "",
-            "icon": "zoom-out",
-            "command": "runCommand",
-            "arguments": ["editor.action.fontZoomOut"]
+            "label": "ZOOM",
+            "commands": [
+                {
+                    "label": "Zoom In",
+                    "description": "",
+                    "icon": "zoom-in",
+                    "command": "runCommand",
+                    "arguments": ["editor.action.fontZoomIn"]
+                },
+                {
+                    "label": "Zoom Out",
+                    "description": "",
+                    "icon": "zoom-out",
+                    "command": "runCommand",
+                    "arguments": ["editor.action.fontZoomOut"]
+                }
+            ]
         },
         {
             "label": "Insert",
@@ -67,6 +107,18 @@
             "icon": "find-replace",
             "command": "insertNewCode",
             "arguments": ["package.json", "\"webpack\": \"node --max-old-space-size=4096", "\"webpack\": \"node --max-old-space-size=8192", "replace"]
+        },
+        {
+            "label": "Snippet ➜ console.log(*!!!* ➜)",
+            "description": "",
+            "icon": "code",
+            "command": "runCommand",
+            "arguments": [
+                "editor.action.insertSnippet",
+                {
+                    "snippet": "console.log('***** !!! ***** ${1| ,this.props,this.state,props|} ----->', $1);"
+                }
+            ]
         }
     ]
 }
