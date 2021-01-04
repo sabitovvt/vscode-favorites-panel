@@ -2,7 +2,7 @@
 	"name": "favorites-panel",
 	"displayName": "Favorites panel",
 	"description": "Use the extension to create a panel with your favorite commands, folders, files, URLs.",
-	"version": "0.8.0",
+	"version": "0.9.0",
 	"publisher": "sabitovvt",
 	"engines": {
 		"vscode": "^1.48.0"
@@ -10,18 +10,18 @@
 	"categories": [
 		"Other"
 	],
-    "keywords": [
-        "bookmarks",
-        "favorites",
-        "groups",
-        "favorite files"
-    ],
-    "icon": "resources/favorites-panel.png",
-    "homepage": "https://github.com/sabitovvt/vscode-favorites-panel",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sabitovvt/vscode-favorites-panel.git"
-    },
+	"keywords": [
+		"bookmarks",
+		"favorites",
+		"groups",
+		"favorite files"
+	],
+	"icon": "resources/favorites-panel.png",
+	"homepage": "https://github.com/sabitovvt/vscode-favorites-panel",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sabitovvt/vscode-favorites-panel.git"
+	},
 	"activationEvents": [
 		"onView:favoritesPanel"
 	],

@@ -15,8 +15,14 @@ export function runProgram(program: string) {
 // Open file
 export function openFile(args: any) {
     const projectPath: string = vscode.workspace.rootPath || '';
-    const filePath = args[1] === 'external' ? '' : projectPath;
-    const document = `${filePath}\\${args[0]}`;
+
+    let document: string;
+    
+    if (args[1] !== 'external' && !!projectPath) {
+        document = process.platform === 'win32' ?  `${projectPath}\\${args[0]}` : `${projectPath}/${args[0]}`;
+    } else {
+        document = args[0];
+    }
 
     vscode.workspace.openTextDocument(document).then(
         (doc) => {

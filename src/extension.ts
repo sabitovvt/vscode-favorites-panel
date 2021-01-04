@@ -88,7 +88,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Open demo file of settings
     if (!getCommandsFromConf().length) {
-        openFile([`${context.extensionPath}\\resources\\demosettings.json`, 'external']);
+        const path = process.platform === 'win32' ?  '\\resources\\' : '/resources/';
+        openFile([`${context.extensionPath}${path}demosettings.json`, 'external']);
+
     }
 }
 

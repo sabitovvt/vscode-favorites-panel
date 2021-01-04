@@ -305,8 +305,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 0.8.0
+## 0.9.0 | 2021/01/04
 
-- Improvements TreeView
+- Linux support
 
 More information in the [changelog](CHANGELOG.md "Changelog")

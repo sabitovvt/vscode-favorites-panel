@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.9.0 | 2021/01/04
+- Linux support
+
 ## 0.8.0 | 2020/12/08
 - Improvements TreeView
 
