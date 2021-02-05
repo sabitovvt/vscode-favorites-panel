@@ -64,7 +64,7 @@ export function insertNewCode(args: any) {
             vscode.window.showTextDocument(doc).then(() => {
                 const editor = vscode.window.activeTextEditor;
                 if (editor) {
-                    const regexp = new RegExp(searchPattern);
+                    const regexp = action === 'replaceAll' ? new RegExp(searchPattern, 'g') : new RegExp(searchPattern);
                     const fullText = editor.document.getText();
                     const index = fullText.search(regexp);
                     const searchedText = (fullText.match(regexp) || [])[0];
@@ -77,6 +77,18 @@ export function insertNewCode(args: any) {
                                 editBuilder.replace(range, newCode);
                             });
                             break;
+                        case 'replaceAll':
+                            const matchAll = Array.from(fullText.matchAll(regexp));
+                            editor.edit((editBuilder) => {
+                                matchAll.forEach((item) => {
+                                    const searchedText = item[0]?.length;
+                                    const positionStart = editor.document.positionAt(Number(item.index));
+                                    const positionEnd = editor.document.positionAt(Number(item.index) + searchedText);
+                                    const range = new vscode.Range(positionStart, positionEnd);
+                                    editBuilder.replace(range, newCode);
+                                });
+                            });
+                            break;   
                         case 'after':
                             errors.add(ERRORS.COMMAND_NOT_SUPPORTED_YET);
                             break;

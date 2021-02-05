@@ -172,6 +172,19 @@ Search and replace text by regexp pattern. Searches until the first match.
 }
 ```
 
+#### Replace All text
+Search and replace text by regexp pattern. Searches all match.
+
+```json
+{
+  "label": "ReplaceAll",
+  "description": "",
+  "icon": "find-replace",
+  "command": "insertNewCode",
+  "arguments": ["ui/components/tableItem.ts", "<td className=\"col-date-time\">", "<div className=\"WOW\"></div>", "replaceALL"]
+}
+```
+
 ### Settings for example:
 
 Copy this snippet of settings into settings.json file (VS Code settings file) to see the extension in action.
@@ -305,8 +318,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 0.9.0 | 2021/01/04
+### 0.10.0 | 2021/02/05
 
-- Linux support
+- Added the _replaceAll_ parameter of the __favoritesPanel.insertNewCode__ command.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

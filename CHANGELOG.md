@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.10.0 | 2021/02/05
+- Added the _replaceAll_ parameter of the __favoritesPanel.insertNewCode__ command.
+
 ## 0.9.0 | 2021/01/04
 - Linux support
 
