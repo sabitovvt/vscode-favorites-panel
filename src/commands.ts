@@ -41,6 +41,7 @@ export function runCommand(args: any) {
         case '':
             errors.add(ERRORS.COMMAND_NOT_FOUND);
             break;
+        case 'vscode.openFolder':
         case 'vscode.open':
             if (!rest[0]) {
                 errors.add(ERRORS.COMMAND_NOT_FOUND);
