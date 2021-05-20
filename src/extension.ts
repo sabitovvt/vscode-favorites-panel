@@ -1,7 +1,9 @@
+import * as demoSettings from '../resources/demosettings.json';
 import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
 import {PLUGIN_NAME} from './consts';
 import {ICommand} from './types';
-import * as demoSettings from '../resources/demosettings.json';
 import {FavoritesPanelProvider} from './FavoritesPanelProvider';
 import {TreeItem} from './TreeItem';
 import {insertNewCode, openFile, openUrl, runCommand, runProgram} from './commands';
@@ -43,9 +45,30 @@ const getCommand = (item: any) => {
 // Get Commands from configuration.
 const getCommandsFromConf = (): ICommand[] => vscode.workspace.getConfiguration(PLUGIN_NAME).get('commands') || [];
 
+// Get path to config file.
+const getConfFilePath = (): string => vscode.workspace.getConfiguration(PLUGIN_NAME).get('configPath') || '';
+
+// Get commands from file.
+const getCommandsFromFile = (file: string): ICommand[] => {
+    if (file && fs.existsSync(file)) {
+        const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+        return json[`${PLUGIN_NAME}.commands`];
+    } else {
+        return [];
+    }
+};
+
 // Prepare commands for tree view.
 export const getCommandsForTree = () => {
-    const commandsFromConf: ICommand[] = getCommandsFromConf();
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0].uri?.fsPath;
+    const commandsFromConf: ICommand[] = workspaceFolder
+        ? [
+              ...getCommandsFromConf(),
+              ...getCommandsFromFile(getConfFilePath()),
+              ...getCommandsFromFile(path.join(workspaceFolder, '.favoritesPanel.json')),
+              ...getCommandsFromFile(path.join(workspaceFolder, 'favoritesPanel.json')),
+          ]
+        : [];
     const commandsForTree = commandsFromConf.length ? commandsFromConf : (<any>demoSettings)[`${PLUGIN_NAME}.commands`];
     return commandsForTree.map((item: any) => {
         if (item.commands) {
@@ -88,9 +111,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Open demo file of settings
     if (!getCommandsFromConf().length) {
-        const path = process.platform === 'win32' ?  '\\resources\\' : '/resources/';
+        const path = process.platform === 'win32' ? '\\resources\\' : '/resources/';
         openFile([`${context.extensionPath}${path}demosettings.json`, 'external']);
-
     }
 }
 

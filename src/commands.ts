@@ -17,9 +17,9 @@ export function openFile(args: any) {
     const projectPath: string = vscode.workspace.rootPath || '';
 
     let document: string;
-    
+
     if (args[1] !== 'external' && !!projectPath) {
-        document = process.platform === 'win32' ?  `${projectPath}\\${args[0]}` : `${projectPath}/${args[0]}`;
+        document = process.platform === 'win32' ? `${projectPath}\\${args[0]}` : `${projectPath}/${args[0]}`;
     } else {
         document = args[0];
     }
@@ -40,6 +40,12 @@ export function runCommand(args: any) {
     switch (command) {
         case '':
             errors.add(ERRORS.COMMAND_NOT_FOUND);
+            break;
+        case 'vscode.openFolder':
+            if (!rest[0]) {
+                errors.add(ERRORS.COMMAND_NOT_FOUND);
+            }
+            vscode.commands.executeCommand(command, vscode.Uri.file(rest[0]));
             break;
         case 'vscode.open':
             if (!rest[0]) {
@@ -88,7 +94,7 @@ export function insertNewCode(args: any) {
                                     editBuilder.replace(range, newCode);
                                 });
                             });
-                            break;   
+                            break;
                         case 'after':
                             errors.add(ERRORS.COMMAND_NOT_SUPPORTED_YET);
                             break;

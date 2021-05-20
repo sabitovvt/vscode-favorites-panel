@@ -2,7 +2,7 @@
 	"name": "favorites-panel",
 	"displayName": "Favorites panel",
 	"description": "Use the extension to create a panel with your favorite commands, folders, files, URLs.",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"publisher": "sabitovvt",
 	"engines": {
 		"vscode": "^1.53.0"
@@ -31,6 +31,10 @@
 			"type": "object",
 			"title": "favoritesPanel configuration",
 			"properties": {
+				"favoritesPanel.configPath": {
+					"type": "string",
+					"default": null
+				},
 				"favoritesPanel.commands": {
 					"type": "array",
 					"default": []

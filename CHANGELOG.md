@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.11.0 | 2021/05/20
+- Added support for vscode.openFolder.
+- Added the ability to move plugin settings into custom files.
+
 ## 0.10.0 | 2021/02/05
 - Added the _replaceAll_ parameter of the __favoritesPanel.insertNewCode__ command.
 

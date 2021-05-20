@@ -22,6 +22,14 @@ If extension settings are not specified, demo settings will be used.
 
 The extension settings are in section **"favoritesPanel.commands": []** in the settings.json
 
+You can also place settings in custom files
+
+The order of displaying the settings:
+- **settings.json**
+- **"favoritesPanel.configPath": "full_path_to_custom_configuration_file"** in the settings.json
+- **.favoritesPanel.json** in project folder
+- **favoritesPanel.json** in project folder
+
 ```json
 "favoritesPanel.commands": [
     {
@@ -318,8 +326,9 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 0.10.0 | 2021/02/05
+### 0.11.0 | 2021/05/20
 
-- Added the _replaceAll_ parameter of the __favoritesPanel.insertNewCode__ command.
+- Added support for vscode.openFolder.
+- Added the ability to move plugin settings into custom files.
 
 More information in the [changelog](CHANGELOG.md "Changelog")
