@@ -326,9 +326,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 0.11.0 | 2021/05/20
+### 0.11.1 | 2021/05/24
 
-- Added support for vscode.openFolder.
-- Added the ability to move plugin settings into custom files.
+- Fix loading settings for use cases without opening a folder.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

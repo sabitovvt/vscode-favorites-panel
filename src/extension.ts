@@ -61,14 +61,14 @@ const getCommandsFromFile = (file: string): ICommand[] => {
 // Prepare commands for tree view.
 export const getCommandsForTree = () => {
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0].uri?.fsPath;
-    const commandsFromConf: ICommand[] = workspaceFolder
-        ? [
-              ...getCommandsFromConf(),
-              ...getCommandsFromFile(getConfFilePath()),
-              ...getCommandsFromFile(path.join(workspaceFolder, '.favoritesPanel.json')),
-              ...getCommandsFromFile(path.join(workspaceFolder, 'favoritesPanel.json')),
-          ]
-        : [];
+    const commandsFromConf: ICommand[] = [...getCommandsFromConf(), ...getCommandsFromFile(getConfFilePath())];
+
+    workspaceFolder &&
+        commandsFromConf.push(
+            ...getCommandsFromFile(path.join(workspaceFolder, '.favoritesPanel.json')),
+            ...getCommandsFromFile(path.join(workspaceFolder, 'favoritesPanel.json'))
+        );
+
     const commandsForTree = commandsFromConf.length ? commandsFromConf : (<any>demoSettings)[`${PLUGIN_NAME}.commands`];
     return commandsForTree.map((item: any) => {
         if (item.commands) {

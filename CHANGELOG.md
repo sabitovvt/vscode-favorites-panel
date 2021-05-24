@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.11.1 | 2021/05/24
+- Fix loading settings for use cases without opening a folder.
+
 ## 0.11.0 | 2021/05/20
 - Added support for vscode.openFolder.
 - Added the ability to move plugin settings into custom files.
