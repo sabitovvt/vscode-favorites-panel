@@ -54,27 +54,8 @@
 			{
 				"command": "favoritesPanel.refreshPanel",
 				"title": "Refresh panel",
+				"category": "Favorites Panel",
 				"icon": "$(refresh)"
-			},
-			{
-				"command": "favoritesPanel.openFile",
-				"title": "Open File"
-			},
-			{
-				"command": "favoritesPanel.run",
-				"title": "Run Program"
-			},
-			{
-				"command": "favoritesPanel.openUrl",
-				"title": "Open URL"
-			},
-			{
-				"command": "favoritesPanel.runCommand",
-				"title": "Run Command"
-			},
-			{
-				"command": "favoritesPanel.insertNewCode",
-				"title": "Insert or replace text"
 			}
 		],
 		"viewsContainers": {
@@ -87,10 +68,12 @@
 			]
 		},
 		"views": {
-			"favoritesPanel": [
+			"explorer": [
 				{
 					"id": "favoritesPanel",
-					"name": ""
+					"name": "Favorites Panel",
+					"contextualTitle": "Favorites Panel",
+					"icon": "resources/favorites-panel.svg"
 				}
 			]
 		}
