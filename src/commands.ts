@@ -75,7 +75,7 @@ export function insertNewCode(args: any) {
                     const index = fullText.search(regexp);
                     const searchedText = (fullText.match(regexp) || [])[0];
                     const positionStart = editor.document.positionAt(index);
-                    const positionEnd = editor.document.positionAt(index + searchedText?.length);
+                    const positionEnd = editor.document.positionAt(index + (searchedText?.length || 0));
                     switch (action) {
                         case 'replace':
                             const range = new vscode.Range(positionStart, positionEnd);

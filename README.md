@@ -20,16 +20,18 @@ The extension requires initial configuration.
 Edit the settings file VSCODE.
 If extension settings are not specified, demo settings will be used.
 
-The extension settings are in section **"favoritesPanel.commands": []** in the settings.json
+The extension settings are in section **"favoritesPanel.commands": []** in the Settings(settings.json)
 
 You can also place settings in custom files
 
 The order of displaying the settings:
-- **settings.json**
-- **"favoritesPanel.configPath": "full_path_to_custom_configuration_file"** in the settings.json
+- **Settings: favoritesPanel.commands**
+- **Settings: favoritesPanel.configPath: "full_path_to_custom_configuration_file"**
+- **.vscode/favoritesPanel.json** in project folder
 - **.favoritesPanel.json** in project folder
 - **favoritesPanel.json** in project folder
 
+### favoritesPanel.commands
 ```json
 "favoritesPanel.commands": [
     {
@@ -41,6 +43,19 @@ The order of displaying the settings:
     }
 ]
 ```
+
+### favoritesPanel.configPath
+Example for OS Windows
+```json
+"favoritesPanel.configPath": "C:\\Projects\\favoritesPanel.json"
+```
+
+### favoritesPanel.explorerView
+Moves the "Favorites panel" in the Explorer View
+```json
+"favoritesPanel.explorerView": true
+```
+
 List of available [icons](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons")
 
 ## Examples of using the plugin
@@ -139,11 +154,11 @@ Settings for running arbitrary commands
 command: workbench.action.findInFiles
 arguments:
 - query?: string;
--	isRegex?: boolean;
--	triggerSearch?: boolean;
--	filesToInclude?: string;
--	filesToExclude?: string;
--	isCaseSensitive?: boolean;
+- isRegex?: boolean;
+- triggerSearch?: boolean;
+- filesToInclude?: string;
+- filesToExclude?: string;
+- isCaseSensitive?: boolean;
 
 ```json
 {
@@ -326,8 +341,7 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 0.11.1 | 2021/05/24
-
-- Fix loading settings for use cases without opening a folder.
+## 1.0.1 | 2023/03/18
+- Fixed README.MD.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

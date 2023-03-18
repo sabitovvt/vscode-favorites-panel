@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.0.1 | 2023/03/18
+- Fixed README.MD.
+
+## 1.0.0 | 2023/03/18
+- Added setting __favoritesPanel.explorerView__.
+- Added loading settings from .vscode/favoritesPanel.json file.
+- Fixed loading settings from Workspace Folders.
+- Fixed unnecessary opening of demosettings.json file.
+
 ## 0.11.1 | 2021/05/24
 - Fix loading settings for use cases without opening a folder.
 

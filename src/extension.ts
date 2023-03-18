@@ -3,11 +3,16 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import {PLUGIN_NAME} from './consts';
-import {ICommand} from './types';
+import {ICommand, IStore} from './types';
 import {FavoritesPanelProvider} from './FavoritesPanelProvider';
 import {TreeItem} from './TreeItem';
 import {insertNewCode, openFile, openUrl, runCommand, runProgram} from './commands';
 import {Errors} from './Errors';
+
+// initial store.
+const store: IStore = {
+    commands: [],
+};
 
 export const errors = new Errors();
 
@@ -60,16 +65,25 @@ const getCommandsFromFile = (file: string): ICommand[] => {
 
 // Prepare commands for tree view.
 export const getCommandsForTree = () => {
-    const workspaceFolder = vscode.workspace.workspaceFolders?.[0].uri?.fsPath;
-    const commandsFromConf: ICommand[] = [...getCommandsFromConf(), ...getCommandsFromFile(getConfFilePath())];
+    const workspaceFolders = vscode.workspace.workspaceFolders?.map((folder) => folder.uri?.fsPath) || [];
+    const commands: ICommand[] = [...getCommandsFromConf(), ...getCommandsFromFile(getConfFilePath())];
 
-    workspaceFolder &&
-        commandsFromConf.push(
-            ...getCommandsFromFile(path.join(workspaceFolder, '.favoritesPanel.json')),
-            ...getCommandsFromFile(path.join(workspaceFolder, 'favoritesPanel.json'))
-        );
+    if (workspaceFolders.length) {
+        workspaceFolders.forEach((filder) => {
+            const vscodeFolder = process.platform === 'win32' ? '\\.vscode\\' : '/.vscode/';
+            commands.push(
+                ...getCommandsFromFile(path.join(filder, `${vscodeFolder}favoritesPanel.json`))
+            );
+            commands.push(
+                ...getCommandsFromFile(path.join(filder, '.favoritesPanel.json')),
+                ...getCommandsFromFile(path.join(filder, 'favoritesPanel.json'))
+            );
+        });
+    }
 
-    const commandsForTree = commandsFromConf.length ? commandsFromConf : (<any>demoSettings)[`${PLUGIN_NAME}.commands`];
+    store.commands = [...commands];
+
+    const commandsForTree = store.commands.length ? store.commands : (<any>demoSettings)[`${PLUGIN_NAME}.commands`];
     return commandsForTree.map((item: any) => {
         if (item.commands) {
             return new TreeItem(
@@ -88,6 +102,7 @@ export const getCommandsForTree = () => {
 export function activate(context: vscode.ExtensionContext) {
     const favoritesPanelProvider = new FavoritesPanelProvider(getCommandsForTree());
     vscode.window.registerTreeDataProvider('favoritesPanel', favoritesPanelProvider);
+    vscode.window.registerTreeDataProvider('favoritesPanelExplorer', favoritesPanelProvider);
     vscode.commands.registerCommand(`${PLUGIN_NAME}.refreshPanel`, () => favoritesPanelProvider.refresh());
 
     context.subscriptions.push(
@@ -110,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     // Open demo file of settings
-    if (!getCommandsFromConf().length) {
+    if (!store.commands.length) {
         const path = process.platform === 'win32' ? '\\resources\\' : '/resources/';
         openFile([`${context.extensionPath}${path}demosettings.json`, 'external']);
     }

@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
 
+export interface IStore {
+    commands: ICommand[];
+}
+
 export interface IItem extends vscode.TreeItem {
     collapsibleState: number;
     label: string;

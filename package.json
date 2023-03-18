@@ -1,119 +1,120 @@
 {
-	"name": "favorites-panel",
-	"displayName": "Favorites panel",
-	"description": "Use the extension to create a panel with your favorite commands, folders, files, URLs.",
-	"version": "0.11.1",
-	"publisher": "sabitovvt",
-	"engines": {
-		"vscode": "^1.53.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"keywords": [
-		"bookmarks",
-		"favorites",
-		"groups",
-		"favorite files"
-	],
-	"icon": "resources/favorites-panel.png",
-	"homepage": "https://github.com/sabitovvt/vscode-favorites-panel",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/sabitovvt/vscode-favorites-panel.git"
-	},
-	"activationEvents": [
-		"onView:favoritesPanel"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"configuration": {
-			"type": "object",
-			"title": "favoritesPanel configuration",
-			"properties": {
-				"favoritesPanel.configPath": {
-					"type": "string",
-					"default": null
-				},
-				"favoritesPanel.commands": {
-					"type": "array",
-					"default": []
-				}
-			}
-		},
-		"menus": {
-			"view/title": [
-				{
-					"command": "favoritesPanel.refreshPanel",
-					"when": "view == favoritesPanel",
-					"group": "navigation"
-				}
-			]
-		},
-		"commands": [
-			{
-				"command": "favoritesPanel.refreshPanel",
-				"title": "Refresh panel",
-				"icon": "$(refresh)"
-			},
-			{
-				"command": "favoritesPanel.openFile",
-				"title": "Open File"
-			},
-			{
-				"command": "favoritesPanel.run",
-				"title": "Run Program"
-			},
-			{
-				"command": "favoritesPanel.openUrl",
-				"title": "Open URL"
-			},
-			{
-				"command": "favoritesPanel.runCommand",
-				"title": "Run Command"
-			},
-			{
-				"command": "favoritesPanel.insertNewCode",
-				"title": "Insert or replace text"
-			}
-		],
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "favoritesPanel",
-					"title": "Favorites Panel",
-					"icon": "resources/favorites-panel.svg"
-				}
-			]
-		},
-		"views": {
-			"favoritesPanel": [
-				{
-					"id": "favoritesPanel",
-					"name": ""
-				}
-			]
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^7.0.2",
-		"@types/node": "^13.13.41",
-		"@types/vscode": "^1.53.0",
-		"@typescript-eslint/eslint-plugin": "^2.30.0",
-		"@typescript-eslint/parser": "^2.30.0",
-		"eslint": "^6.8.0",
-		"glob": "^7.1.6",
-		"mocha": "^7.1.2",
-		"typescript": "^3.8.3",
-		"vscode-test": "^1.5.0"
-	}
+    "name": "favorites-panel",
+    "displayName": "Favorites panel",
+    "description": "Use the extension to create a panel with your favorite commands, folders, files, URLs.",
+    "version": "1.0.1",
+    "publisher": "sabitovvt",
+    "engines": {
+        "vscode": "^1.53.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "bookmarks",
+        "favorites",
+        "groups",
+        "favorite files"
+    ],
+    "icon": "resources/favorites-panel.png",
+    "homepage": "https://github.com/sabitovvt/vscode-favorites-panel",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sabitovvt/vscode-favorites-panel.git"
+    },
+    "activationEvents": [
+        "onView:favoritesPanel",
+        "onView:favoritesPanelExplorer"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "favoritesPanel configuration",
+            "properties": {
+                "favoritesPanel.configPath": {
+                    "type": "string",
+                    "default": null
+                },
+                "favoritesPanel.commands": {
+                    "type": "array",
+                    "default": []
+                },
+                "favoritesPanel.explorerView": {
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "favoritesPanel.refreshPanel",
+                    "when": "view == favoritesPanel",
+                    "group": "navigation"
+                },
+                {
+                    "command": "favoritesPanel.refreshPanel",
+                    "when": "view == favoritesPanelExplorer",
+                    "group": "navigation"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "favoritesPanel.refreshPanel",
+                "title": "Refresh panel",
+                "category": "Favorites Panel",
+                "icon": "$(refresh)"
+            }
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "favoritesPanel",
+                    "title": "Favorites Panel",
+                    "icon": "resources/favorites-panel.svg"
+                }
+            ]
+        },
+        "views": {
+            "favoritesPanel": [
+                {
+                    "id": "favoritesPanel",
+                    "name": "Favorites Panel",
+                    "when": "config.favoritesPanel.explorerView != true"
+                }
+            ],
+            "explorer": [
+                {
+                    "id": "favoritesPanelExplorer",
+                    "name": "Favorites Panel",
+                    "contextualTitle": "Favorites Panel",
+                    "icon": "resources/favorites-panel.svg",
+                    "when": "config.favoritesPanel.explorerView == true"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "eslint src --ext ts",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^7.0.2",
+        "@types/node": "^13.13.41",
+        "@types/vscode": "^1.53.0",
+        "@typescript-eslint/eslint-plugin": "^2.30.0",
+        "@typescript-eslint/parser": "^2.30.0",
+        "eslint": "^6.8.0",
+        "glob": "^7.1.6",
+        "mocha": "^7.1.2",
+        "typescript": "^5.0.2",
+        "vscode-test": "^1.5.0"
+    }
 }
