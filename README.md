@@ -1,28 +1,26 @@
 # Favorites Panel
 
-Adds a panel for accessing frequently used files, Internet addresses, programs, commands, snippets.
+Adds a panel for accessing frequently used files, URLs, programs, commands, snippets.
 
 ![Favorites Panel](preview/screenshot_0.png)
 
 ## Features
 
 - Quick access to your favorite files
+- Quick access to favorite commands
 - Quick access to favorite URLs
 - Fast launch of applications
-- Quick access to your favorite files
-- Quick access to favorite commands
 - Setting icons for commands
 
 
 ## Extension Settings
 
-The extension requires initial configuration.
-Edit the settings file VSCODE.
+The extension requires initial configuration.  
+Edit the settings file VSCODE.  
 If extension settings are not specified, demo settings will be used.
 
-The extension settings are in section **"favoritesPanel.commands": []** in the Settings(settings.json)
-
-You can also place settings in custom files
+The extension settings are in section **"favoritesPanel.commands": []** in the Settings(settings.json).  
+You can also place settings in custom files.
 
 The order of displaying the settings:
 - **Settings: favoritesPanel.commands**
@@ -45,18 +43,18 @@ The order of displaying the settings:
 ```
 
 ### favoritesPanel.configPath
-Example for OS Windows
+example for OS Windows
 ```json
 "favoritesPanel.configPath": "C:\\Projects\\favoritesPanel.json"
 ```
 
 ### favoritesPanel.explorerView
-Moves the "Favorites panel" in the Explorer View
+moves the "Favorites panel" in the Explorer View
 ```json
 "favoritesPanel.explorerView": true
 ```
 
-List of available [icons](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons")
+List of available icons is available [here](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons").
 
 ## Examples of using the plugin
 
@@ -79,7 +77,7 @@ List of available [icons](https://code.visualstudio.com/api/references/icons-in-
 
 #### File in project
 
-Settings for opening file in project
+settings for opening file in project
 
 ```json
 {
@@ -91,7 +89,7 @@ Settings for opening file in project
 ```
 #### File is out project 
 
-Settings for opening file in project
+settings for opening file in project
 
 ```json
     {
@@ -103,7 +101,7 @@ Settings for opening file in project
 ```
 ### Run program
 
-Settings for run program
+settings for run program
 
 #### Run Chrome in OS Windows
 
@@ -128,7 +126,7 @@ Settings for run program
 
 ### Open URL
 
-Settings for open URL
+settings for open URL
 
 ```json
     {
@@ -140,7 +138,7 @@ Settings for open URL
 ```
 ### Run Command
 
-Settings for running arbitrary commands
+settings for running arbitrary commands
 
 ```json
 {
@@ -151,14 +149,14 @@ Settings for running arbitrary commands
 }
 ```
 #### Open Search panel
-command: workbench.action.findInFiles
+command: `workbench.action.findInFiles`
 arguments:
-- query?: string;
-- isRegex?: boolean;
-- triggerSearch?: boolean;
-- filesToInclude?: string;
-- filesToExclude?: string;
-- isCaseSensitive?: boolean;
+- `query?: string;`
+- `isRegex?: boolean;`
+- `triggerSearch?: boolean;`
+- `filesToInclude?: string;`
+- `filesToExclude?: string;`
+- `isCaseSensitive?: boolean;`
 
 ```json
 {
@@ -210,7 +208,7 @@ Search and replace text by regexp pattern. Searches all match.
 
 ### Settings for example:
 
-Copy this snippet of settings into settings.json file (VS Code settings file) to see the extension in action.
+Copy this snippet of settings into settings.json file (vscode settings file) to see the extension in action.
 
 ```json
     "favoritesPanel.commands": [
@@ -344,4 +342,4 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 ## 1.0.1 | 2023/03/18
 - Fixed README.MD.
 
-More information in the [changelog](CHANGELOG.md "Changelog")
+More information in the [changelog](CHANGELOG.md "Changelog").
