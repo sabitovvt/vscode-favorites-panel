@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.0 | 2023/03/22
+- Added __sequence__ parameter for running multiple commands.
+
 ## 1.0.1 | 2023/03/18
 - Fixed README.MD.
 

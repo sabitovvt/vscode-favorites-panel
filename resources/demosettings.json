@@ -20,18 +20,14 @@
                     "description": "",
                     "icon": "debug-step-out",
                     "command": "runCommand",
-                    "arguments": [
-                        "editor.action.transformToUppercase"
-                    ]
+                    "arguments": ["editor.action.transformToUppercase"]
                 },
                 {
                     "label": "UPPER CASE ➜ lowercase",
                     "description": "",
                     "icon": "debug-step-into",
                     "command": "runCommand",
-                    "arguments": [
-                        "editor.action.transformToLowercase"
-                    ]
+                    "arguments": ["editor.action.transformToLowercase"]
                 },
                 {
                     "label": "var ➜ prop={prop}",
@@ -76,6 +72,39 @@
             "arguments": ["workbench.action.findInFiles", {"query": "SearchPannern", "triggerSearch": true}]
         },
         {
+            "label": "Sequence",
+            "description": " - Running multiple commands",
+            "icon": "console",
+            "sequence": [
+                {
+                    "command": "runCommand",
+                    "arguments": ["workbench.action.terminal.new"]
+                },
+                {
+                    "command": "runCommand",
+                    "arguments": ["workbench.action.terminal.focus"]
+                },
+                {
+                    "command": "runCommand",
+                    "arguments": [
+                        "workbench.action.terminal.renameWithArg",
+                        {
+                            "name": "New Terminal"
+                        }
+                    ]
+                },
+                {
+                    "command": "runCommand",
+                    "arguments": [
+                        "workbench.action.terminal.sendSequence",
+                        {
+                            "text": "node -v\nnpm -v\ngit --version\n"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "label": "ZOOM",
             "commands": [
                 {
@@ -106,7 +135,12 @@
             "description": "",
             "icon": "find-replace",
             "command": "insertNewCode",
-            "arguments": ["package.json", "\"webpack\": \"node --max-old-space-size=4096", "\"webpack\": \"node --max-old-space-size=8192", "replace"]
+            "arguments": [
+                "package.json",
+                "\"webpack\": \"node --max-old-space-size=4096",
+                "\"webpack\": \"node --max-old-space-size=8192",
+                "replace"
+            ]
         },
         {
             "label": "Snippet ➜ console.log(*!!!* ➜)",

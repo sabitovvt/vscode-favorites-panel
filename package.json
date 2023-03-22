@@ -2,7 +2,7 @@
     "name": "favorites-panel",
     "displayName": "Favorites panel",
     "description": "Use the extension to create a panel with your favorite commands, folders, files, URLs.",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "publisher": "sabitovvt",
     "engines": {
         "vscode": "^1.53.0"
