@@ -15,6 +15,7 @@ The extension adds a panel for accessing frequently used commands, files, direct
 - Quick access to favorite URLs
 - Fast launch of applications
 - Setting icons for commands
+- Separation setting for different workspaces
 
 
 ## Extension Settings
@@ -24,12 +25,16 @@ Edit the settings file VSCODE.
 If extension settings are not specified, demo settings will be used.
 
 The extension settings are in section **"favoritesPanel.commands": []** in the Settings(settings.json)
+You can also place settings in custom files **favoritesPanel.configPath**
 
-You can also place settings in custom files
+If you want to make specific settings for each workspace, then use **favoritesPanel.commandsForWorkspace** or
+ **favoritesPanel.configPathForWorkspace**. in the workspace settings.
 
-The order of displaying the settings:
+The order of loading and displaying the settings:
 - **Settings: favoritesPanel.commands**
+- **Settings: favoritesPanel.commandsForWorkspace**
 - **Settings: favoritesPanel.configPath: "full_path_to_custom_configuration_file"**
+- **Settings: favoritesPanel.configPathForWorkspace: "full_path_to_custom_configuration_file"**
 - **.vscode/favoritesPanel.json** in project folder
 - **.favoritesPanel.json** in project folder
 - **favoritesPanel.json** in project folder
@@ -47,14 +52,38 @@ The order of displaying the settings:
 ]
 ```
 
+### favoritesPanel.commandsForWorkspace
+Use this setting if you wish to set specific settings for the workspace.
+>Please note that you need to specify this setting in the workspace setting, not the User settings
+```json
+"favoritesPanel.commandsForWorkspace": [
+    {
+        "label": "README",
+        "description": "- read me",
+        "icon": "zap",
+        "command": "openFile",
+        "arguments": ["README.MD"]
+    }
+]
+```
+
 ### favoritesPanel.configPath
 Example for OS Windows
 ```json
 "favoritesPanel.configPath": "C:\\Projects\\favoritesPanel.json"
 ```
 
+### favoritesPanel.configPathForWorkspace
+Use this setting if you wish to set specific settings for the workspace.
+>Please note that you need to specify this setting in the workspace setting, not the User settings
+
+Example for OS Windows
+```json
+"favoritesPanel.configPathForWorkspace": "C:\\Projects\\favoritesPanelForMyProject.json"
+```
+
 ### favoritesPanel.explorerView
-moves the "Favorites Bar" in the explorer view. This allows you to drag the panel to a different location. Examples are shown in the screenshots.
+moves the "Favorites Panel" in the explorer view. This allows you to drag the panel to a different location. Examples are shown in the screenshots.
 ```json
 "favoritesPanel.explorerView": true
 ```
@@ -221,6 +250,7 @@ Search and replace text by regexp pattern. Searches all match.
 
 ### Sequence
 running multiple commands
+>Doesn't work if it's in the commands array
 
 ```json
 {
@@ -425,7 +455,9 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-## 1.1.0 | 2023/03/22
-- Added __sequence__ parameter for running multiple commands.
+### 1.2.0 | 2023/03/25
+- Added setting __favoritesPanel.commandsForWorkspace__.
+- Added setting __favoritesPanel.configPathForWorkspace__.
+- Added the ability to open settings from panel menu.
 
 More information in the [changelog](CHANGELOG.md "Changelog")
