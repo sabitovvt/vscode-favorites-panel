@@ -20,12 +20,12 @@ The extension adds a panel for accessing frequently used commands, files, direct
 
 ## Extension Settings
 
-The extension requires initial configuration.
-Edit the settings file VSCODE.
+The extension requires initial configuration.  
+Edit the settings file VSCODE.  
 If extension settings are not specified, demo settings will be used.
 
-The extension settings are in section **"favoritesPanel.commands": []** in the Settings(settings.json)
-You can also place settings in custom files **favoritesPanel.configPath**
+The extension settings are in section **"favoritesPanel.commands": []** in the Settings(settings.json).
+You can also place settings in custom files **favoritesPanel.configPath**.
 
 If you want to make specific settings for each workspace, then use **favoritesPanel.commandsForWorkspace** or
  **favoritesPanel.configPathForWorkspace**. in the workspace settings.
@@ -68,7 +68,7 @@ Use this setting if you wish to set specific settings for the workspace.
 ```
 
 ### favoritesPanel.configPath
-Example for OS Windows
+example for OS Windows
 ```json
 "favoritesPanel.configPath": "C:\\Projects\\favoritesPanel.json"
 ```
@@ -83,7 +83,7 @@ Example for OS Windows
 ```
 
 ### favoritesPanel.explorerView
-moves the "Favorites Panel" in the explorer view. This allows you to drag the panel to a different location. Examples are shown in the screenshots.
+Moves the "Favorites Panel" in the explorer view. This allows you to drag the panel to a different location. Examples are shown in the screenshots.
 ```json
 "favoritesPanel.explorerView": true
 ```
@@ -96,7 +96,6 @@ Secondary Side Bar | Bottom Panel
 You must set the required parameter __label__.
 You can specify __description__, __icon__
 Find the icon you need [here](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons").
-
 
 ## Examples of using the plugin
 
@@ -119,7 +118,7 @@ Find the icon you need [here](https://code.visualstudio.com/api/references/icons
 
 #### File in project
 
-Settings for opening file in project
+settings for opening file in project
 
 ```json
 {
@@ -131,7 +130,7 @@ Settings for opening file in project
 ```
 #### File is out project 
 
-Settings for opening file in project
+settings for opening file in project
 
 ```json
     {
@@ -143,7 +142,7 @@ Settings for opening file in project
 ```
 ### Run program
 
-Settings for run program
+settings for run program
 
 #### Run Chrome in OS Windows
 
@@ -168,7 +167,7 @@ Settings for run program
 
 ### Open URL
 
-Settings for open URL
+settings for open URL
 
 ```json
     {
@@ -180,7 +179,7 @@ Settings for open URL
 ```
 ### Run Command
 
-Settings for running arbitrary commands
+settings for running arbitrary commands
 
 ```json
 {
@@ -191,14 +190,14 @@ Settings for running arbitrary commands
 }
 ```
 #### Open Search panel
-command: workbench.action.findInFiles
+command: `workbench.action.findInFiles`
 arguments:
-- query?: string;
-- isRegex?: boolean;
-- triggerSearch?: boolean;
-- filesToInclude?: string;
-- filesToExclude?: string;
-- isCaseSensitive?: boolean;
+- `query?: string;`
+- `isRegex?: boolean;`
+- `triggerSearch?: boolean;`
+- `filesToInclude?: string;`
+- `filesToExclude?: string;`
+- `isCaseSensitive?: boolean;`
 
 ```json
 {
@@ -460,4 +459,4 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 - Added setting __favoritesPanel.configPathForWorkspace__.
 - Added the ability to open settings from panel menu.
 
-More information in the [changelog](CHANGELOG.md "Changelog")
+More information in the [changelog](CHANGELOG.md "Changelog").
