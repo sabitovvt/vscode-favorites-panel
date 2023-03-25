@@ -2,7 +2,7 @@
     "name": "favorites-panel",
     "displayName": "Favorites panel",
     "description": "Use the extension to create a panel with your favorite commands, folders, files, URLs.",
-    "version": "1.0.1",
+    "version": "1.2.0",
     "publisher": "sabitovvt",
     "engines": {
         "vscode": "^1.53.0"
@@ -30,19 +30,32 @@
     "contributes": {
         "configuration": {
             "type": "object",
-            "title": "favoritesPanel configuration",
+            "title": "favoritesPanel",
             "properties": {
                 "favoritesPanel.configPath": {
                     "type": "string",
-                    "default": null
+                    "default": null,
+                    "description": "Path to your file with settings for \"Favorites Panel\""
+                },
+                "favoritesPanel.configPathForWorkspace": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Path to your file with settings for \"Favorites Panel\" for Workspace. Not use in User Settings. Use in Workspace Settings"
                 },
                 "favoritesPanel.commands": {
                     "type": "array",
-                    "default": []
+                    "default": [],
+                    "description": "Commands for \"Favorites Panel\""
+                },
+                "favoritesPanel.commandsForWorkspace": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Commands for \"Favorites Panel\".  Not use in User Settings. Use in Workspace Settings"
                 },
                 "favoritesPanel.explorerView": {
                     "type": "boolean",
-                    "default": false
+                    "default": false,
+                    "description": "Move the \"Favorites Panel\" in the explorer view."
                 }
             }
         },
@@ -50,12 +63,22 @@
             "view/title": [
                 {
                     "command": "favoritesPanel.refreshPanel",
-                    "when": "view == favoritesPanel",
+                    "when": "view == favoritesPanel || view == favoritesPanelExplorer",
                     "group": "navigation"
                 },
                 {
-                    "command": "favoritesPanel.refreshPanel",
-                    "when": "view == favoritesPanelExplorer",
+                    "command": "favoritesPanel.openFavoritesPanelSettings",
+                    "when": "view == favoritesPanel || view == favoritesPanelExplorer",
+                    "group": "navigation"
+                },
+                {
+                    "command": "favoritesPanel.openUserJsonSettings",
+                    "when": "view == favoritesPanel || view == favoritesPanelExplorer",
+                    "group": "navigation"
+                },
+                {
+                    "command": "favoritesPanel.openWorkspaceJsonSettings",
+                    "when": "view == favoritesPanel || view == favoritesPanelExplorer",
                     "group": "navigation"
                 }
             ]
@@ -66,6 +89,24 @@
                 "title": "Refresh panel",
                 "category": "Favorites Panel",
                 "icon": "$(refresh)"
+            },
+            {
+                "command": "favoritesPanel.openFavoritesPanelSettings",
+                "title": "Open settings",
+                "category": "Favorites Panel",
+                "icon": "$(gear)"
+            },
+            {
+                "command": "favoritesPanel.openUserJsonSettings",
+                "title": "User JSON settings",
+                "category": "Favorites Panel",
+                "icon": "$(file-code)"
+            },
+            {
+                "command": "favoritesPanel.openWorkspaceJsonSettings",
+                "title": "Workspace JSON settings",
+                "category": "Favorites Panel",
+                "icon": "$(file-code)"
             }
         ],
         "viewsContainers": {

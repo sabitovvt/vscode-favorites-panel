@@ -19,7 +19,7 @@ export class FavoritesPanelProvider implements vscode.TreeDataProvider<TreeItem>
 
     getChildren(element?: TreeItem | undefined): vscode.ProviderResult<TreeItem[]> {
         if (!this.commands) {
-            vscode.window.showInformationMessage('Ассистент не знает чем вам помочь.');
+            vscode.window.showInformationMessage('Commands not found');
             return Promise.resolve([]);
         }
 

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import {ERRORS, INFORMATION} from './consts';
 import {errors} from './extension';
+import {ICommand} from './types';
 
 const {exec} = require('child_process');
 
@@ -113,6 +114,28 @@ export function insertNewCode(args: any) {
     );
 
     errors.show();
+}
+
+// Run Sequence.
+export function runSequence(args: ICommand[]) {
+    args?.forEach((item) => {
+        switch (item.command) {
+            case 'openFile':
+                openFile(item.arguments);
+                break;
+            case 'run':
+                runProgram(item.arguments?.[0]);
+                break;
+            case 'runCommand':
+                runCommand(item.arguments);
+                break;
+            case 'insertNewCode':
+                insertNewCode(item.arguments);
+                break;
+            default:
+                vscode.window.showInformationMessage('This command is not supported in Sequence');
+        }
+    });
 }
 
 // Open URL

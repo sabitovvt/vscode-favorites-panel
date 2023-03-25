@@ -1,8 +1,10 @@
 import * as vscode from 'vscode';
 
 export interface IStore {
-    commands: ICommand[];
+    commands: TCommand[];
 }
+
+export type TCommand = (ICommand | ICommandWithSequence);
 
 export interface IItem extends vscode.TreeItem {
     collapsibleState: number;
@@ -15,6 +17,14 @@ export interface IItem extends vscode.TreeItem {
 export interface ICommand {
     label: string;
     description?: string;
+    icon?: string;
     command: string;
     arguments?: Array<any>;
+}
+
+export interface ICommandWithSequence {
+    label: string;
+    description?: string;
+    icon?: string;
+    sequence?: Array<ICommand>;
 }

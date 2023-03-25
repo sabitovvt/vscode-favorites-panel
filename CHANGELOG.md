@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.2.0 | 2023/03/25
+- Added setting __favoritesPanel.commandsForWorkspace__.
+- Added setting __favoritesPanel.configPathForWorkspace__.
+- Added the ability to open settings from panel menu.
+
+## 1.1.0 | 2023/03/22
+- Added __sequence__ parameter for running multiple commands.
+
 ## 1.0.1 | 2023/03/18
 - Fixed README.MD.
 
