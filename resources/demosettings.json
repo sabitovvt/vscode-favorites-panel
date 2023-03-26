@@ -4,13 +4,15 @@
             "label": "README",
             "description": " - Important!",
             "command": "openFile",
+            "iconColor": "editorBracketHighlight.foreground6",
             "arguments": ["README.MD"]
         },
         {
             "label": "Hosts",
             "description": "Windows hosts file",
             "command": "openFile",
-            "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"]
+            "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"],
+            "iconColor": "editorBracketHighlight.foreground5"
         },
         {
             "label": "EDIT",
@@ -47,6 +49,7 @@
             "label": "Chrome",
             "description": "Run Chrome",
             "icon": "browser",
+            "iconColor": "editorBracketHighlight.foreground4",
             "command": "run",
             "arguments": ["start chrome"]
         },
@@ -54,6 +57,7 @@
             "label": "github.com",
             "description": "",
             "icon": "link-external",
+            "iconColor": "editorBracketHighlight.foreground3",
             "command": "runCommand",
             "arguments": ["vscode.open", "https://github.com"]
         },
@@ -61,6 +65,7 @@
             "label": "Windows folder",
             "description": "Open Windows folder",
             "icon": "symbol-folder",
+            "iconColor": "editorBracketHighlight.foreground2",
             "command": "run",
             "arguments": ["start explorer /n, C:\\Windows"]
         },
@@ -68,6 +73,7 @@
             "label": "Find in files",
             "description": "",
             "icon": "search",
+            "iconColor": "editorBracketHighlight.foreground1",
             "command": "runCommand",
             "arguments": ["workbench.action.findInFiles", {"query": "SearchPannern", "triggerSearch": true}]
         },

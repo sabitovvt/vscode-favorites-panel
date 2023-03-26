@@ -46,6 +46,7 @@ The order of loading and displaying the settings:
         "label": "README",
         "description": "- read me",
         "icon": "zap",
+        "iconColor": "editorBracketHighlight.foreground5",
         "command": "openFile",
         "arguments": ["README.MD"]
     }
@@ -61,6 +62,7 @@ Use this setting if you wish to set specific settings for the workspace.
         "label": "README",
         "description": "- read me",
         "icon": "zap",
+        "iconColor": "editorBracketHighlight.foreground5",
         "command": "openFile",
         "arguments": ["README.MD"]
     }
@@ -94,8 +96,34 @@ Secondary Side Bar | Bottom Panel
 
 ## Displayed command settings
 You must set the required parameter __label__.
-You can specify __description__, __icon__
+You can specify __description__, __icon__, __iconColor__.
+
 Find the icon you need [here](https://code.visualstudio.com/api/references/icons-in-labels#icon-listing "icons").
+
+The available colors of icon are listed in [here](https://code.visualstudio.com/docs/getstarted/theme-color-reference "Icon colors").
+> __Examples of colors:__
+> - editorBracketHighlight.foreground1
+> - editorBracketHighlight.foreground2
+> - editorBracketHighlight.foreground3
+> - editorBracketHighlight.foreground4
+> - editorBracketHighlight.foreground5
+> - editorBracketHighlight.foreground6
+> - terminal.ansiBlack: 'Black' ANSI color in the terminal.
+> - terminal.ansiBlue: 'Blue' ANSI color in the terminal.
+> - terminal.ansiBrightBlack: 'BrightBlack' ANSI color in the terminal.
+> - terminal.ansiBrightBlue: 'BrightBlue' ANSI color in the terminal.
+> - terminal.ansiBrightCyan: 'BrightCyan' ANSI color in the terminal.
+> - terminal.ansiBrightGreen: 'BrightGreen' ANSI color in the terminal.
+> - terminal.ansiBrightMagenta: 'BrightMagenta' ANSI color in the terminal.
+> - terminal.ansiBrightRed: 'BrightRed' ANSI color in the terminal.
+> - terminal.ansiBrightWhite: 'BrightWhite' ANSI color in the terminal.
+> - terminal.ansiBrightYellow: 'BrightYellow' ANSI color in the terminal.
+> - terminal.ansiCyan: 'Cyan' ANSI color in the terminal.
+> - terminal.ansiGreen: 'Green' ANSI color in the terminal.
+> - terminal.ansiMagenta: 'Magenta' ANSI color in the terminal.
+> - terminal.ansiRed: 'Red' ANSI color in the terminal.
+> - terminal.ansiWhite: 'White' ANSI color in the terminal.
+> - terminal.ansiYellow: 'Yellow' ANSI color in the terminal.
 
 
 ## Examples of using the plugin
@@ -250,7 +278,6 @@ Search and replace text by regexp pattern. Searches all match.
 
 ### Sequence
 running multiple commands
->Doesn't work if it's in the commands array
 
 ```json
 {
@@ -455,9 +482,8 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 1.2.0 | 2023/03/25
-- Added setting __favoritesPanel.commandsForWorkspace__.
-- Added setting __favoritesPanel.configPathForWorkspace__.
-- Added the ability to open settings from panel menu.
+### 1.3.0 | 2023/03/26
+- Improvements of sequence.
+- Added the ability to change the color of icons.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

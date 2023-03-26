@@ -17,25 +17,29 @@ const store: IStore = {
 export const errors = new Errors();
 
 // get Icon
-const getIcon = (item: any) => {
+const getIcon = (item: any, color: string) => {
+    const themeColor = new vscode.ThemeColor(color ?? '');
     switch (item.command) {
         case 'openFile':
-            return new vscode.ThemeIcon('symbol-file');
+            return new vscode.ThemeIcon('symbol-file', themeColor);
         case 'openUrl': // DEPRECATED
-            return new vscode.ThemeIcon('link-external');
+            return new vscode.ThemeIcon('link-external', themeColor);
         case 'run':
-            return new vscode.ThemeIcon('console');
+            return new vscode.ThemeIcon('console', themeColor);
         case 'runCommand':
-            return new vscode.ThemeIcon('run');
+            return new vscode.ThemeIcon('run', themeColor);
         case 'insertNewCode':
-            return new vscode.ThemeIcon('find-replace');
+            return new vscode.ThemeIcon('find-replace', themeColor);
         default:
             return vscode.ThemeIcon.File;
     }
 };
 
 // Get command from item of settings
-const getCommand = (item: ICommand) => {
+const getCommand = (item: ICommandWithSequence) => {
+    if (item.sequence) {
+        return getSequence(item);
+    }
     return {
         label: item.label,
         description: item.description,
@@ -43,10 +47,13 @@ const getCommand = (item: ICommand) => {
             command: `${PLUGIN_NAME}.${item.command}`,
             arguments: [item.arguments],
         },
-        iconPath: (item.icon && new vscode.ThemeIcon(item.icon)) || getIcon(item),
+        iconPath:
+            (item.icon && new vscode.ThemeIcon(item.icon, new vscode.ThemeColor(item.iconColor ?? ''))) ||
+            getIcon(item, item.iconColor ?? ''),
     };
 };
 
+// Get Sequence from item of settings
 const getSequence = (item: ICommandWithSequence) => {
     return {
         label: item.label,
@@ -55,7 +62,9 @@ const getSequence = (item: ICommandWithSequence) => {
             command: `${PLUGIN_NAME}.runSequence`,
             arguments: [item.sequence],
         },
-        iconPath: (item.icon && new vscode.ThemeIcon(item.icon)) || getIcon(item),
+        iconPath:
+            (item.icon && new vscode.ThemeIcon(item.icon, new vscode.ThemeColor(item.iconColor ?? ''))) ||
+            getIcon(item, item.iconColor ?? ''),
     };
 };
 
@@ -109,11 +118,8 @@ export const getCommandsForTree = () => {
                     return getCommand(item);
                 })
             );
-        } else if (item.sequence) {
-            return getSequence(item);
-        } else {
-            return getCommand(item);
         }
+        return getCommand(item);
     });
 };
 
@@ -126,14 +132,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(`${PLUGIN_NAME}.openFavoritesPanelSettings`, () => {
         runCommand(['workbench.action.openSettings', `@ext:sabitovvt.favorites-panel`]);
     }),
-    vscode.commands.registerCommand(`${PLUGIN_NAME}.openUserJsonSettings`, () => {
-        runCommand(['workbench.action.openSettingsJson']);
-    }),
-    vscode.commands.registerCommand(`${PLUGIN_NAME}.openWorkspaceJsonSettings`, () => {
-        runCommand(['workbench.action.openWorkspaceSettingsFile']);
-    }),
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.openUserJsonSettings`, () => {
+            runCommand(['workbench.action.openSettingsJson']);
+        }),
+        vscode.commands.registerCommand(`${PLUGIN_NAME}.openWorkspaceJsonSettings`, () => {
+            runCommand(['workbench.action.openWorkspaceSettingsFile']);
+        }),
 
-    context.subscriptions.push(
+        context.subscriptions.push(
             vscode.commands.registerCommand(`${PLUGIN_NAME}.openFile`, (args) => {
                 openFile(args);
             }),

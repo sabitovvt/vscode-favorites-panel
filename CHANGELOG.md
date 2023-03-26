@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.3.0 | 2023/03/26
+- Improvements of sequence.
+- Added the ability to change the color of icons.
+
 ## 1.2.0 | 2023/03/25
 - Added setting __favoritesPanel.commandsForWorkspace__.
 - Added setting __favoritesPanel.configPathForWorkspace__.
