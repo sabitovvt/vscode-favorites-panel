@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.4.0 | 2023/03/29
+- Added new settings format for __favoritesPanel.configPath__ and __favoritesPanel.configPathForWorkspace__.
+
 ## 1.3.0 | 2023/03/26
 - Improvements of sequence.
 - Added the ability to change the color of icons.

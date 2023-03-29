@@ -4,7 +4,7 @@
             "label": "README",
             "description": " - Important!",
             "command": "openFile",
-            "iconColor": "editorBracketHighlight.foreground6",
+            "iconColor": "terminal.ansiBrightBlue",
             "arguments": ["README.MD"]
         },
         {
@@ -12,7 +12,7 @@
             "description": "Windows hosts file",
             "command": "openFile",
             "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"],
-            "iconColor": "editorBracketHighlight.foreground5"
+            "iconColor": "terminal.ansiBrightGreen"
         },
         {
             "label": "EDIT",

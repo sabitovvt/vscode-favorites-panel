@@ -75,13 +75,98 @@ Example for OS Windows
 "favoritesPanel.configPath": "C:\\Projects\\favoritesPanel.json"
 ```
 
+Early versions of the extension prior to 1.3.0 only supported:
+```json
+{
+    "favoritesPanel.commands": [
+        {
+            "label": "README",
+            "description": " - Important!",
+            "command": "openFile",
+            "iconColor": "editorBracketHighlight.foreground6",
+            "arguments": ["README.MD"]
+        },
+        {
+            "label": "Hosts",
+            "description": "Windows hosts file",
+            "command": "openFile",
+            "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"],
+            "iconColor": "editorBracketHighlight.foreground5"
+        }
+    ]
+}
+```
+
+Since version 1.4.0 you can also use a simplified version:
+```json
+[
+    {
+        "label": "README",
+        "description": " - Important!",
+        "command": "openFile",
+        "iconColor": "editorBracketHighlight.foreground6",
+        "arguments": ["README.MD"]
+    },
+    {
+        "label": "Hosts",
+        "description": "Windows hosts file",
+        "command": "openFile",
+        "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"],
+        "iconColor": "editorBracketHighlight.foreground5"
+    }
+]
+```
+
+
 ### favoritesPanel.configPathForWorkspace
 Use this setting if you wish to set specific settings for the workspace.
 >Please note that you need to specify this setting in the workspace setting, not the User settings
 
 Example for OS Windows
 ```json
-"favoritesPanel.configPathForWorkspace": "C:\\Projects\\favoritesPanelForMyProject.json"
+"favoritesPanel.configPathForWorkspace": "C:\\Projects\\Project1\\favoritesPanelForMyProject1.json"
+```
+
+Early versions of the extension prior to 1.3.0 only supported:
+```json
+{
+    "favoritesPanel.commands": [
+        {
+            "label": "README",
+            "description": " - Important!",
+            "command": "openFile",
+            "iconColor": "editorBracketHighlight.foreground6",
+            "arguments": ["README.MD"]
+        },
+        {
+            "label": "Hosts",
+            "description": "Windows hosts file",
+            "command": "openFile",
+            "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"],
+            "iconColor": "editorBracketHighlight.foreground5"
+        }
+    ]
+}
+```
+
+Since version 1.4.0 you can also use a simplified version:
+```json
+[
+    {
+        "label": "README",
+        "description": " - Important!",
+        "command": "openFile",
+        "iconColor": "editorBracketHighlight.foreground6",
+        "arguments": ["README.MD"]
+    },
+    {
+        "label": "Hosts",
+        "description": "Windows hosts file",
+        "command": "openFile",
+        "arguments": ["C:\\Windows\\System32\\drivers\\etc\\hosts", "external"],
+        "iconColor": "editorBracketHighlight.foreground5"
+    }
+]
 ```
 
 ### favoritesPanel.explorerView
@@ -124,6 +209,29 @@ The available colors of icon are listed in [here](https://code.visualstudio.com/
 > - terminal.ansiRed: 'Red' ANSI color in the terminal.
 > - terminal.ansiWhite: 'White' ANSI color in the terminal.
 > - terminal.ansiYellow: 'Yellow' ANSI color in the terminal.
+
+You can also define your own colors for use in the extension.
+You need to add to the Visual Studio Code settings:
+```js
+"workbench.colorCustomizations": {
+    "favoritesPanel.myColorGreen": "#006700",
+    "favoritesPanel.myColorBlue": "#000067"
+},
+```
+
+And in the extension settings specify:
+```json
+{
+    "command": "openFile",
+    "icon": "file",
+    "iconColor": "favoritesPanel.myColorGreen",
+},
+{
+    "command": "openFile",
+    "icon": "file",
+    "iconColor": "favoritesPanel.myColorBlue",
+},
+```
 
 
 ## Examples of using the plugin
@@ -482,8 +590,7 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 1.3.0 | 2023/03/26
-- Improvements of sequence.
-- Added the ability to change the color of icons.
+### 1.4.0 | 2023/03/29
+- Added new settings format for __favoritesPanel.configPath__ and __favoritesPanel.configPathForWorkspace__.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

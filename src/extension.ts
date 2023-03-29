@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import {PLUGIN_NAME} from './consts';
-import {ICommand, ICommandWithSequence, IStore, TCommand} from './types';
+import {ICommandWithSequence, IStore, TCommand} from './types';
 import {FavoritesPanelProvider} from './FavoritesPanelProvider';
 import {TreeItem} from './TreeItem';
 import {insertNewCode, openFile, openUrl, runCommand, runProgram, runSequence} from './commands';
@@ -76,10 +76,16 @@ const getCommandsFromWorkspaceConf = (): TCommand[] => vscode.workspace.getConfi
 const getConfFilePath = (): string => vscode.workspace.getConfiguration(PLUGIN_NAME).get('configPath') || '';
 const getWorkspaceConfFilePath = (): string => vscode.workspace.getConfiguration(PLUGIN_NAME).get('configPathForWorkspace') || '';
 
-// Get commands from file.
+/**
+ * Get commands from file.
+ * @param file full path with filename.
+ */
 const getCommandsFromFile = (file: string): TCommand[] => {
     if (file && fs.existsSync(file)) {
         const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+        if (Array.isArray([json])) {
+            return json;
+        }
         return json[`${PLUGIN_NAME}.commands`];
     } else {
         return [];
