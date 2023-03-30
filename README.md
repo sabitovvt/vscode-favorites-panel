@@ -590,7 +590,7 @@ Copy this snippet of settings into settings.json file (VS Code settings file) to
 
 ## Release Notes
 
-### 1.4.0 | 2023/03/29
-- Added new settings format for __favoritesPanel.configPath__ and __favoritesPanel.configPathForWorkspace__.
+### 1.4.1 | 2023/03/30
+- Fixed Error.
 
 More information in the [changelog](CHANGELOG.md "Changelog")

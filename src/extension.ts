@@ -83,7 +83,7 @@ const getWorkspaceConfFilePath = (): string => vscode.workspace.getConfiguration
 const getCommandsFromFile = (file: string): TCommand[] => {
     if (file && fs.existsSync(file)) {
         const json = JSON.parse(fs.readFileSync(file, 'utf8'));
-        if (Array.isArray([json])) {
+        if (Array.isArray(json)) {
             return json;
         }
         return json[`${PLUGIN_NAME}.commands`];

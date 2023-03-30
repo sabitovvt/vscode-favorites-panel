@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.4.1 | 2023/03/30
+- Fixed Error.
+
 ## 1.4.0 | 2023/03/29
 - Added new settings format for __favoritesPanel.configPath__ and __favoritesPanel.configPathForWorkspace__.
 
